@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B14AA74924AF2604004B334A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74824AF2604004B334A /* Network.swift */; };
+		B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */; };
+		B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDB724AF385900D78E13 /* GithubAPI.swift */; };
+		B15BCDBB24AF38AC00D78E13 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDBA24AF38AC00D78E13 /* User.swift */; };
+		B15BCDBD24AF4C1B00D78E13 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDBC24AF4C1B00D78E13 /* APIError.swift */; };
 		B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B60A24ACE1500098CEFA /* AppDelegate.swift */; };
 		B407B60D24ACE1500098CEFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B60C24ACE1500098CEFA /* SceneDelegate.swift */; };
 		B407B60F24ACE1500098CEFA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B60E24ACE1500098CEFA /* ViewController.swift */; };
@@ -27,6 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B14AA74824AF2604004B334A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkProvider.swift"; sourceTree = "<group>"; };
+		B15BCDB724AF385900D78E13 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
+		B15BCDBA24AF38AC00D78E13 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B15BCDBC24AF4C1B00D78E13 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		B407B60724ACE1500098CEFA /* GitHubExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B407B60A24ACE1500098CEFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B407B60C24ACE1500098CEFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +68,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B14AA74A24AF2820004B334A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				B14AA74824AF2604004B334A /* Network.swift */,
+				B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */,
+				B15BCDB724AF385900D78E13 /* GithubAPI.swift */,
+				B15BCDBC24AF4C1B00D78E13 /* APIError.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B15BCDB924AF38A400D78E13 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B15BCDBA24AF38AC00D78E13 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B407B5FE24ACE1500098CEFA = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +108,8 @@
 		B407B60924ACE1500098CEFA /* GitHubExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				B15BCDB924AF38A400D78E13 /* Models */,
+				B14AA74A24AF2820004B334A /* Networking */,
 				B407B60A24ACE1500098CEFA /* AppDelegate.swift */,
 				B407B60C24ACE1500098CEFA /* SceneDelegate.swift */,
 				B407B60E24ACE1500098CEFA /* ViewController.swift */,
@@ -201,8 +232,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B407B60F24ACE1500098CEFA /* ViewController.swift in Sources */,
+				B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */,
 				B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */,
+				B14AA74924AF2604004B334A /* Network.swift in Sources */,
+				B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */,
+				B15BCDBD24AF4C1B00D78E13 /* APIError.swift in Sources */,
 				B407B60D24ACE1500098CEFA /* SceneDelegate.swift in Sources */,
+				B15BCDBB24AF38AC00D78E13 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
