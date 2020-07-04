@@ -20,6 +20,7 @@
 		B407B61424ACE1530098CEFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B407B61324ACE1530098CEFA /* Assets.xcassets */; };
 		B407B61724ACE1530098CEFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B407B61524ACE1530098CEFA /* LaunchScreen.storyboard */; };
 		B407B62224ACE1530098CEFA /* GitHubExplorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B62124ACE1530098CEFA /* GitHubExplorerTests.swift */; };
+		B407B63024B0B8940098CEFA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B62F24B0B8940098CEFA /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		B407B61D24ACE1530098CEFA /* GitHubExplorerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubExplorerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B407B62124ACE1530098CEFA /* GitHubExplorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubExplorerTests.swift; sourceTree = "<group>"; };
 		B407B62324ACE1530098CEFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B407B62F24B0B8940098CEFA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				B14AA74A24AF2820004B334A /* Networking */,
 				B407B60A24ACE1500098CEFA /* AppDelegate.swift */,
 				B407B60C24ACE1500098CEFA /* SceneDelegate.swift */,
+				B407B62E24B0B8770098CEFA /* Utils */,
 				B407B60E24ACE1500098CEFA /* ViewController.swift */,
 				B407B61024ACE1500098CEFA /* Main.storyboard */,
 				B407B61324ACE1530098CEFA /* Assets.xcassets */,
@@ -139,6 +142,14 @@
 				B407B62324ACE1530098CEFA /* Info.plist */,
 			);
 			path = GitHubExplorerTests;
+			sourceTree = "<group>";
+		};
+		B407B62E24B0B8770098CEFA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B407B62F24B0B8940098CEFA /* Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +258,7 @@
 				B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */,
 				B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */,
 				B14AA74924AF2604004B334A /* Network.swift in Sources */,
+				B407B63024B0B8940098CEFA /* Utils.swift in Sources */,
 				B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */,
 				B15BCDBD24AF4C1B00D78E13 /* APIError.swift in Sources */,
 				B407B60D24ACE1500098CEFA /* SceneDelegate.swift in Sources */,

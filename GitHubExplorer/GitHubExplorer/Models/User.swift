@@ -9,4 +9,6 @@
 import Foundation
 
 struct User {
+    // TODO: fill with needed properties
+
 }

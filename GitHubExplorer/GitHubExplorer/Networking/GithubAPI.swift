@@ -11,7 +11,7 @@ import Foundation
 class GithubAPI {
     enum GHEndpoint {
         case accessToken(code: String)
-        case user
+        case user(accessToken: String)
     }
     
     private let network: Network
@@ -28,16 +28,11 @@ class GithubAPI {
     
     func getAccessToken(code: String, completion: @escaping (Result<String, APIError>) -> ()) {
         let endpoint = GHEndpoint.accessToken(code: code)
-        var request = URLRequest(url: oauthBaseURL.appendingPathComponent(endpoint.path))
-        request.httpMethod = endpoint.verb
-        request.allHTTPHeaderFields = endpoint.headers
-        
-        //FIXME: determine if it's a body or query parameter based on verb enum
-        request.httpBody = dictionaryToJsonString(endpoint.parameters).data(using: .utf8)
+        let request = initRequest(for: endpoint, requestURL: oauthBaseURL)
         
         network.call(request: request) { result in
             switch result {
-            case let .success(data, response):
+            case let .success(data, _):
                 guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String : Any] else {
                     print("[GithubAPI] Could not parse response in access_token call")
                     completion(.failure(.github))
@@ -57,7 +52,40 @@ class GithubAPI {
         }
     }
     
-    func getUser() {
+    func getUser(accessToken: String, completion: @escaping (Result<User, APIError>) -> ()) {
+        let endpoint = GHEndpoint.user(accessToken: accessToken)
+        let request = initRequest(for: endpoint, requestURL: baseURL)
+        
+        network.call(request: request) { result in
+            switch result {
+            case let .success(data, _): // destruct tuple. . .
+                guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String : Any] else {
+                    print("[GithubAPI] Could not parse response in get_user call")
+                    completion(.failure(.github))
+                    return
+                }
+                
+                completion(.success(User(
+                    // fill with deserialized json props here for constructor args. . .
+                )))
+            case let .failure(error):
+                completion(.failure(APIError.error(from: error)))
+            }
+        }
+    }
+    
+    // handles both POST and GET requests (for now) per the RequestVerb enum
+    private func initRequest(for endpoint: GHEndpoint, requestURL: URL) -> URLRequest {
+        var request = URLRequest(url: requestURL.appendingPathComponent(endpoint.path))
+        request.httpMethod = endpoint.verb.rawValue
+        request.allHTTPHeaderFields = endpoint.headers
+        
+        // decide query params or body here using verb enum
+        // change the request by passing it as an inout var
+        // (can't do it otherwise since it's a struct and they're passed by value)
+        endpoint.verb.setRequestData(request: &request, data: endpoint.parameters)
+        
+        return request
     }
     
     /// How will that work?
@@ -66,17 +94,11 @@ class GithubAPI {
 //    }
 }
 
-func dictionaryToJsonString(_ dict: [String : Any]) -> String {
-    let jsonString = dict.reduce("") { (jsonString, pair) in
-        return jsonString + "\"\(pair.key)\" : \"\(pair.value)\","
-    }
-    return String(jsonString.dropLast(1)) // Drops the last trailing comma
-}
 
 extension GithubAPI {
     private static let defaultParams = [
         "client_secret" : "",
-        "client_id" : ""
+        "client_id" : "3fed7e1efcc8b36c1336" // TODO: hide and put somewhere else
     ]
     
     private static let defaultHeaders = [
@@ -85,9 +107,9 @@ extension GithubAPI {
         "User-Agent" : "GHExplorer"
     ]
     
-    private static var authHeaders: [String : String] {
+    private static func authHeaders(token: String = "") -> [String : String] {
         return [
-            "Authorization" : "token _"
+            "Authorization" : "token \(token)" // TODO: replace placeholder var and save token in secure local storage
         ]
     }
 }
@@ -106,8 +128,8 @@ extension GithubAPI.GHEndpoint {
     
     var headers: [String : String] {
         switch self {
-        case .user:
-            return GithubAPI.authHeaders.merging(GithubAPI.defaultHeaders) { current, _ in current }
+        case .user(let accessToken): // get the access token of the instance
+            return GithubAPI.authHeaders(token: accessToken).merging(GithubAPI.defaultHeaders) { current, _ in current } // use token for modified auth header enum
         case .accessToken:
             return GithubAPI.defaultHeaders
         }
@@ -123,12 +145,12 @@ extension GithubAPI.GHEndpoint {
     }
     
     // FIXME: Trun into a enum
-    var verb: String {
+    var verb: Network.RequestVerb {
         switch self {
         case .accessToken:
-            return "POST"
+            return Network.RequestVerb.POST
         case .user:
-            return "GET"
+            return Network.RequestVerb.GET
         }
     }
 }
