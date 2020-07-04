@@ -7,9 +7,11 @@
 //
 
 import Foundation
-
+ 
 protocol NetworkProvider {
     func dataTask(with url: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
 }
 
-extension URLSession: NetworkProvider {}
+extension URLSession: NetworkProvider {
+    
+}

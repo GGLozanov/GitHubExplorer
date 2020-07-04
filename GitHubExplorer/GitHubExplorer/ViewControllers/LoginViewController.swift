@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     
     private let webView = WKWebView()
-    private let api = GithubAPI()
+    //private let api = GithubAPI()
     
     @IBAction func login() {
         let urlString = "https://github.com/login/oauth/authorize"

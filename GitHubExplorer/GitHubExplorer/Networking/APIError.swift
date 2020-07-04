@@ -8,32 +8,30 @@
 
 import Foundation
 
-extension GithubAPI {
-    enum APIError: Error {
-        case network
-        case github
-        case authentication
-        
-        // FIXME: Be more granular
-        static func error(from error: Network.NetworkError) -> APIError {
-            switch error {
-            case .noData, .noResponse:
+enum APIError: Error { 
+    case network
+    case github
+    case authentication
+    
+    // FIXME: Be more granular 
+    static func error(from error: NetworkError) -> APIError {
+        switch error {
+        case .noData, .noResponse:
+            return .network
+        case .cocoaNetworking:
+            return .network
+        case .badStatusCode(let code):
+            switch code {
+            case 200..<400:
+                fatalError("This was supposed to be handled in Network")
+            case 401, 403:
+                return .authentication
+            case 404:
                 return .network
-            case .cocoaNetworking:
+            case 500...Int.max:
+                return .github
+            default:
                 return .network
-            case .badStatusCode(let code):
-                switch code {
-                case 200..<400:
-                    fatalError("This was supposed to be handled in Network")
-                case 401, 403:
-                    return .authentication
-                case 404:
-                    return .network
-                case 500...Int.max:
-                    return .github
-                default:
-                    return .network
-                }
             }
         }
     }
