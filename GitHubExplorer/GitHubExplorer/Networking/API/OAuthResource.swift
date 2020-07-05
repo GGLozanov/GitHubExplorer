@@ -8,33 +8,19 @@
  
 import Foundation
  
-class OAuthResource: Api{
+class OAuthResource: RequestResource {
+    
     private let code: String
     
     init(code: String) {
         self.code = code
-    }
-    
-    func getParameters() -> [String : Any]{
-        return [
+        super.init(parameters: [
             "code" : code,
-        ].merging(GitHubApi.defaultParams) { (current, _) in current }
-    }
-    
-    func getHeaders() -> [String : String] {
-        return GitHubApi.defaultHeaders
-    }
-    
-    func getPath() -> String {
-        return "/access_token"
-    }
-    
-    func getVerb() -> String {
-        return "POST"
+            ].merging(GithubAPI.defaultParams) { (current, _) in current }, headers: GithubAPI.defaultHeaders, path: "/access_token", verb: RequestVerb.POST)
     }
 }
 
-extension OAuthResource: NetworkRequest{
+extension OAuthResource: NetworkRequest {
     typealias Model = String 
     
     func decode(data: Data) -> Model? {
@@ -50,9 +36,8 @@ extension OAuthResource: NetworkRequest{
         return token
     }
     
-    func call(completion: @escaping (Result<(Model?, URLResponse), APIError>) -> ()){
-        var request = GitHubApi().initRequest(for: self, requestURL: GitHubApi.OAuthBaseURL)
-        GitHubApi().setRequestData(request: &request, data: getParameters())
+    override func call(completion: @escaping (Result<(Model?, URLResponse), APIError>) -> ()) {
+        var request = GithubAPI().initRequest(for: self, requestURL: GithubAPI.OAuthBaseURL)
         call(request: request, completion: completion)
     }
 }

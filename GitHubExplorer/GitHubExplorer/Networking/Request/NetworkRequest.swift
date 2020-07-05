@@ -8,14 +8,14 @@
 
 import Foundation 
  
-protocol NetworkRequest: AnyObject{
+protocol NetworkRequest: AnyObject {
       associatedtype Model
       func decode(data: Data) -> Model?
 }
 
-extension NetworkRequest{
+extension NetworkRequest {
     
-    func call(request: URLRequest, completion: @escaping (Result<(Model?, URLResponse), APIError>) -> ()){
+    func call(request: URLRequest, completion: @escaping (Result<(Model?, URLResponse), APIError>) -> ()) {
            let session = URLSession.shared
            let task = session.dataTask(with: request) { data, response, error in
                guard error == nil else {
@@ -50,15 +50,3 @@ extension NetworkRequest{
                
        }
 }
-
-enum NetworkError: Error {
-    case cocoaNetworking(NSError)
-    case noResponse
-    case noData
-    case badStatusCode(Int)
-}
-
-
-
-
-
