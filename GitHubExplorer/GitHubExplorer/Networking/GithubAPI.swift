@@ -8,6 +8,11 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let noCodeInOAuthRedirect = Notification.Name("noCodeInOAuthRedirect")
+    static let oauthCodeExtracted = Notification.Name("oauthCodeExtracted")
+}
+
 class GithubAPI {
     enum GHEndpoint {
         case accessToken(code: String)
@@ -17,13 +22,16 @@ class GithubAPI {
     private let network: Network
     private let baseURL: URL
     private let oauthBaseURL: URL
+    private let notificationCenter: NotificationCenter
     
     init(network: Network = Network(),
          baseURL: URL = URL(string: "https://api.github.com")!,
-         oauthBaseURL: URL = URL(string: "https://github.com/login/oauth")!) {
+         oauthBaseURL: URL = URL(string: "https://github.com/login/oauth")!,
+         notificationCenter: NotificationCenter = .default) {
         self.network = network
         self.baseURL = baseURL
         self.oauthBaseURL = oauthBaseURL
+        self.notificationCenter = notificationCenter
     }
     
     func getAccessToken(code: String, completion: @escaping (Result<String, APIError>) -> ()) {
@@ -72,6 +80,16 @@ class GithubAPI {
                 completion(.failure(APIError.error(from: networkError)))
             }
         }
+    }
+    
+    func extractAccessCode(from url: URL) {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+        guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
+            notificationCenter.post(name: NSNotification.Name.noCodeInOAuthRedirect, object: nil)
+            return
+        }
+        
+        notificationCenter.post(Notification(name: Notification.Name.oauthCodeExtracted, object: nil, userInfo: ["code" : code]))
     }
     
     // handles both POST and GET requests (for now) per the RequestVerb enum
@@ -144,7 +162,6 @@ extension GithubAPI.GHEndpoint {
         }
     }
     
-    // FIXME: Trun into a enum
     var verb: Network.RequestVerb {
         switch self {
         case .accessToken:

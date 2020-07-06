@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,32 +16,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bsb-Kr-hXX">
-                                <rect key="frame" x="188" y="71" width="38" height="30"/>
+                                <rect key="frame" x="188" y="438" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="olO-yZ-Qk7"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aM5-qN-CtA">
-                                <rect key="frame" x="10" y="111" width="394" height="741"/>
-                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="aM5-qN-CtA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Zki-nN-3KK"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aM5-qN-CtA" secondAttribute="trailing" constant="10" id="cVO-RS-eYx"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aM5-qN-CtA" secondAttribute="bottom" constant="10" id="dAs-hd-P1Z"/>
-                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="27" id="hDD-9P-WyU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bsb-Kr-hXX" secondAttribute="trailing" constant="188" id="iVW-LM-lCV"/>
-                            <constraint firstItem="aM5-qN-CtA" firstAttribute="top" secondItem="Bsb-Kr-hXX" secondAttribute="bottom" constant="10" id="wTh-ci-SQH"/>
-                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="188" id="x6s-Oh-8uN"/>
+                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerXWithinMargins" id="E9y-bE-V7R"/>
+                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" id="EWU-Xk-NWy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="Bsb-Kr-hXX" id="rK7-1q-hXh"/>
-                        <outlet property="webViewContainer" destination="aM5-qN-CtA" id="D4R-yv-6vB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
