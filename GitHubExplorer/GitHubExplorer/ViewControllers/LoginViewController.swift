@@ -10,8 +10,12 @@ import UIKit
 import SafariServices
 import KeychainAccess
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, Storyboarded {
     @IBOutlet var loginButton: UIButton!
+    
+    typealias CoordinatorType = MainCoordinator
+    weak var coordinator: CoordinatorType?
+        // can't be in protocol because it has to be a weak reference
     
     private let api = GithubAPI()
     private let notificationCenter = NotificationCenter.default
@@ -38,7 +42,7 @@ class LoginViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
             }
-            
+                        
             self?.getUser(withCode: code)
         }
     }
@@ -52,18 +56,18 @@ extension LoginViewController {
             switch result {
             case .success(let accessToken):
                 self.keychain["accessToken"] = accessToken
-                self.showUserController()
-                
+                self.coordinator?.navigateToUser()
+            
             case .failure(let error):
                 self.present(error.alert, animated: true, completion: nil)
             }
         }
     }
     
-    private func showUserController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
-        
-        navigationController?.pushViewController(userVC, animated: true)
-    }
+//    private func showUserController() {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
+//
+//        navigationController?.pushViewController(userVC, animated: true)
+//    }
 }

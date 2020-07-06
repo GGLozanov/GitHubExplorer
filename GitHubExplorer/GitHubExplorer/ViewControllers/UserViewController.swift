@@ -9,13 +9,16 @@
 import UIKit
 import KeychainAccess
 
-class UserViewController: UIViewController {
+class UserViewController: UIViewController, Storyboarded {
     private let api: GithubAPI = GithubAPI()
     private let keychain = Keychain(service: "com.example.GitHubExplorer")
+  
+    typealias CoordinatorType = MainCoordinator
+    var coordinator: CoordinatorType?
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         keychain["accessToken"] = nil
-        navigationController?.popViewController(animated: true)
+        coordinator?.popUser()
     }
     
     override func viewDidLoad() {

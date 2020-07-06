@@ -12,6 +12,7 @@ import KeychainAccess
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator: MainCoordinator? // main coordinator init here
     
     private let keychain = Keychain(service: "com.example.GitHubExplorer")
 
@@ -66,13 +67,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func setupUI(hasLoggedInUser: Bool) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: "LoginViewController")
-        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
-        
         let userNavigationVC = UINavigationController()
-        userNavigationVC.viewControllers = hasLoggedInUser ? [loginVC, userVC] : [loginVC]
         userNavigationVC.modalPresentationStyle = .fullScreen
+        
+        coordinator = MainCoordinator(navigationController: userNavigationVC)
+        
+        hasLoggedInUser ? coordinator?.navigateToUser() : coordinator?.navigateToRoot()
+        
         window?.rootViewController = userNavigationVC
     }
 }

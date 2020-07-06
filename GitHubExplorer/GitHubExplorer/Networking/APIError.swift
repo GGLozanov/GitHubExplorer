@@ -15,7 +15,6 @@ extension GithubAPI {
         case github
         case authentication
         
-        // FIXME: Be more granular
         static func error(from error: Network.NetworkError) -> APIError {
             switch error {
             case .noData, .noResponse:
