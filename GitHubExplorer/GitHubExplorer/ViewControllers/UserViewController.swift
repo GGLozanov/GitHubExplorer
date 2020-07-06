@@ -18,7 +18,11 @@ class UserViewController: UIViewController, Storyboarded {
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         keychain["accessToken"] = nil
-        coordinator?.popUser()
+        do {
+            try coordinator?.popUser()
+        } catch {
+            print("No root VC left to pop!")
+        }
     }
     
     override func viewDidLoad() {

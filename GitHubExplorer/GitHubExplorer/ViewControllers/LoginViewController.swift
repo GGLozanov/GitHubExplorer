@@ -28,7 +28,6 @@ class LoginViewController: UIViewController, Storyboarded {
             URLQueryItem(name: "client_id", value: "3fed7e1efcc8b36c1336")
         ]
         
-        
         UIApplication.shared.open(urlComponents.url!)
     }
     

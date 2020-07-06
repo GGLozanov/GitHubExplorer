@@ -12,6 +12,11 @@ protocol Coordinator {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
     
-    func navigateToRoot()
-    func popRoot()
+    func navigateToRoot(shouldAnimate: Bool)
+    func popRoot(shouldAnimate: Bool) throws
+}
+
+enum NoViewError: Error {
+    case noRootView
+    case noSecondaryViewError(viewControllerType: UIViewController.Type)
 }

@@ -20,37 +20,35 @@ class MainCoordinator: Coordinator {
     // FIXME: Generalise all these methods (important)
     // and avoid repitition
     
-    func navigateToRoot() {
+    func navigateToRoot(shouldAnimate: Bool = true) {
         let vc = LoginViewController.instantiate()
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(vc, animated: shouldAnimate)
     }
     
-    func navigateToUser() {
+    func navigateToUser(shouldAnimate: Bool = true) {
         let vc = UserViewController.instantiate()
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(vc, animated: shouldAnimate)
     }
     
-    func popUser() {
+    func popUser(shouldAnimate: Bool = true) throws {
         guard let topVC = navigationController.viewControllers.last(where: { (vc) -> Bool in
             !(vc is UserViewController) // pop all controllers until different
         }) else {
-            print("No user VC left to pop!")
-            return
+            throw NoViewError.noSecondaryViewError(viewControllerType: UserViewController.self)
         }
         
-        navigationController.popToViewController(topVC, animated: true)
+        navigationController.popToViewController(topVC, animated: shouldAnimate)
     }
     
-    func popRoot() {
+    func popRoot(shouldAnimate: Bool = true) throws {
         guard let topVC = navigationController.viewControllers.last(where: { (vc) -> Bool in
           !(vc is LoginViewController)
         }) else {
-            print("No root VC left to pop!")
-            return
+            throw NoViewError.noRootView
         }
         
-        navigationController.popToViewController(topVC, animated: true)
+        navigationController.popToViewController(topVC, animated: shouldAnimate)
     }
 }
