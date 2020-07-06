@@ -33,9 +33,6 @@ class Network {
                         // never give query params different types than string
                 }
                 
-                requestURLComponents.percentEncodedQuery = requestURLComponents.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
-                // done to make sure special characters don't f*ck up the URL
-                
                 request.url = requestURLComponents.url!;
             case .POST:
                 request.httpBody = dictionaryToJsonString(data).data(using: .utf8)

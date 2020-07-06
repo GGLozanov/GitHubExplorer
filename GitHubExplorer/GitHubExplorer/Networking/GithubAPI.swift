@@ -32,7 +32,7 @@ class GithubAPI {
         
         network.call(request: request) { result in
             switch result {
-            case let .success(data, _):
+            case let .success((data, _)):
                 guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String : Any] else {
                     print("[GithubAPI] Could not parse response in access_token call")
                     completion(.failure(.github))
@@ -46,8 +46,8 @@ class GithubAPI {
                 
                 completion(.success(token))
                 
-            case let .failure(error):
-                completion(.failure(APIError.error(from: error)))
+            case let .failure(networkError):
+                completion(.failure(APIError.error(from: networkError)))
             }
         }
     }
@@ -58,7 +58,7 @@ class GithubAPI {
         
         network.call(request: request) { result in
             switch result {
-            case let .success(data, _): // destruct tuple. . .
+            case let .success((data, _)):
                 guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String : Any] else {
                     print("[GithubAPI] Could not parse response in get_user call")
                     completion(.failure(.github))
@@ -68,8 +68,8 @@ class GithubAPI {
                 completion(.success(User(
                     // fill with deserialized json props here for constructor args. . .
                 )))
-            case let .failure(error):
-                completion(.failure(APIError.error(from: error)))
+            case let .failure(networkError):
+                completion(.failure(APIError.error(from: networkError)))
             }
         }
     }
