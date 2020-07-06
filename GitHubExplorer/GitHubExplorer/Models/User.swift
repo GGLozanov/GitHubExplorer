@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct User {
-    // TODO: fill with needed properties
-
+struct User: Codable {
+    enum CodingKeys: String, CodingKey {
+        case username = "login"
+    }
+    
+    let username: String
 }

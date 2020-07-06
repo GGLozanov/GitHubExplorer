@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIAlertController
 
 extension GithubAPI {
     enum APIError: Error {
@@ -35,6 +36,29 @@ extension GithubAPI {
                     return .network
                 }
             }
+        }
+        
+        var alert: UIAlertController {
+            let title: String
+            let message: String
+            switch self {
+            case .authentication:
+                title = "Authentication failed"
+                message = "Please login again"
+                
+            case .network:
+                title = "Network error"
+                message = "Please check your network connection"
+                
+            case .github:
+                title = "Github error"
+                message = "Please try again in a few moments"
+            }
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            return alert
         }
     }
 }

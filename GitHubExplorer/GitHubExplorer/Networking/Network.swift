@@ -19,25 +19,6 @@ class Network {
     enum RequestVerb: String {
         case POST
         case GET
-        
-        func setRequestData(request: inout URLRequest, data: [String: Any]) {
-            switch self {
-            case .GET:
-                var requestURLComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
-                
-                requestURLComponents.queryItems = data.map { (dictPair) in
-                    
-                    let (key, value) = dictPair // can't deconstruct, smh
-                    return URLQueryItem(name: key, value: (value as! String))
-                        // Might crash for different params
-                        // never give query params different types than string
-                }
-                
-                request.url = requestURLComponents.url!;
-            case .POST:
-                request.httpBody = dictionaryToJsonString(data).data(using: .utf8)
-            }
-        }
     }
     
     private let session: NetworkProvider
@@ -50,31 +31,31 @@ class Network {
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 let error = error! as NSError
-                completion(.failure(.cocoaNetworking(error)))
+                DispatchQueue.main.async { completion(.failure(.cocoaNetworking(error))) }
                 print("[Networking] call failed: \(error.debugDescription)")
                 return
             }
 
             guard let response = response as? HTTPURLResponse else {
-                completion(.failure(.noResponse))
+                DispatchQueue.main.async { completion(.failure(.noResponse)) }
                 print("[Networking] no response")
                 return
             }
             
             guard response.statusCode >= 200, response.statusCode < 400 else {
-                completion(.failure(.badStatusCode(response.statusCode)))
+                DispatchQueue.main.async { completion(.failure(.badStatusCode(response.statusCode))) }
                 print("[Networking] Bad response code: \(response.statusCode)")
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.noData))
+                DispatchQueue.main.async { completion(.failure(.noData)) }
                 print("[Networking] no data")
                 return
             }
             
             print("[Networking] SUCCESS!")
-            completion(.success((data, response)))
+            DispatchQueue.main.async { completion(.success((data, response))) }
         }.resume() // start the data task
     }
 }

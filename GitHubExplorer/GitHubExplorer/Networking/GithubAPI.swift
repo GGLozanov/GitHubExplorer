@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainAccess
 
 extension Notification.Name {
     static let noCodeInOAuthRedirect = Notification.Name("noCodeInOAuthRedirect")
@@ -23,15 +24,20 @@ class GithubAPI {
     private let baseURL: URL
     private let oauthBaseURL: URL
     private let notificationCenter: NotificationCenter
+    private let keychain: Keychain
+    
+    private let decoder = JSONDecoder()
     
     init(network: Network = Network(),
          baseURL: URL = URL(string: "https://api.github.com")!,
          oauthBaseURL: URL = URL(string: "https://github.com/login/oauth")!,
-         notificationCenter: NotificationCenter = .default) {
+         notificationCenter: NotificationCenter = .default,
+         keychain: Keychain = Keychain(service: "com.example.GitHubExplorer")) {
         self.network = network
         self.baseURL = baseURL
         self.oauthBaseURL = oauthBaseURL
         self.notificationCenter = notificationCenter
+        self.keychain = keychain
     }
     
     func getAccessToken(code: String, completion: @escaping (Result<String, APIError>) -> ()) {
@@ -60,22 +66,25 @@ class GithubAPI {
         }
     }
     
-    func getUser(accessToken: String, completion: @escaping (Result<User, APIError>) -> ()) {
+    func getUser(completion: @escaping (Result<User, APIError>) -> ()) {
+        guard let accessToken = keychain["accessToken"] else {
+            completion(.failure(.authentication))
+            return
+        }
+        
         let endpoint = GHEndpoint.user(accessToken: accessToken)
         let request = initRequest(for: endpoint, requestURL: baseURL)
         
         network.call(request: request) { result in
             switch result {
             case let .success((data, _)):
-                guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String : Any] else {
+                do {
+                    let user = try self.decoder.decode(User.self, from: data)
+                    completion(.success(user))
+                } catch {
                     print("[GithubAPI] Could not parse response in get_user call")
                     completion(.failure(.github))
-                    return
                 }
-                
-                completion(.success(User(
-                    // fill with deserialized json props here for constructor args. . .
-                )))
             case let .failure(networkError):
                 completion(.failure(APIError.error(from: networkError)))
             }
@@ -92,6 +101,13 @@ class GithubAPI {
         notificationCenter.post(Notification(name: Notification.Name.oauthCodeExtracted, object: nil, userInfo: ["code" : code]))
     }
     
+    /// How will that work?
+//    public func call<T>(endpoint: GHEndpoint, completion: (Result<T, Error>) -> ()) {
+//
+//    }
+}
+
+extension GithubAPI {
     // handles both POST and GET requests (for now) per the RequestVerb enum
     private func initRequest(for endpoint: GHEndpoint, requestURL: URL) -> URLRequest {
         var request = URLRequest(url: requestURL.appendingPathComponent(endpoint.path))
@@ -101,15 +117,24 @@ class GithubAPI {
         // decide query params or body here using verb enum
         // change the request by passing it as an inout var
         // (can't do it otherwise since it's a struct and they're passed by value)
-        endpoint.verb.setRequestData(request: &request, data: endpoint.parameters)
+        switch endpoint.verb {
+        case .GET:
+            var requestURLComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
+            requestURLComponents.queryItems = endpoint.parameters.map { (dictPair) in
+                
+                let (key, value) = dictPair // can't deconstruct, smh
+                return URLQueryItem(name: key, value: (value as! String))
+                    // Might crash for different params
+                    // never give query params different types than string
+            }
+            
+            request.url = requestURLComponents.url!;
+        case .POST:
+            request.httpBody = dictionaryToJsonString(endpoint.parameters).data(using: .utf8)
+        }
         
         return request
     }
-    
-    /// How will that work?
-//    public func call<T>(endpoint: GHEndpoint, completion: (Result<T, Error>) -> ()) {
-//
-//    }
 }
 
 
