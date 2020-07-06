@@ -8,12 +8,14 @@
 
 import UIKit
 import SafariServices
+import KeychainAccess
 
 class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     
     private let api = GithubAPI()
     private let notificationCenter = NotificationCenter.default
+    private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     @IBAction func login() {
         let urlString = "https://github.com/login/oauth/authorize"
@@ -23,10 +25,11 @@ class LoginViewController: UIViewController {
         ]
         
         
-        UIApplication.shared.openURL(urlComponents.url!)
+        UIApplication.shared.open(urlComponents.url!)
     }
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         notificationCenter.addObserver(forName: NSNotification.Name.oauthCodeExtracted, object: nil, queue: nil) { [weak self] notification in
             guard let code = notification.userInfo?["code"] as? String else {
                 assert(false, "Could not get code from OAuth url")
@@ -35,6 +38,32 @@ class LoginViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
             }
+            
+            self?.getUser(withCode: code)
         }
+    }
+}
+
+extension LoginViewController {
+    private func getUser(withCode code: String) {
+        api.getAccessToken(code: code) { [weak self] (result) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let accessToken):
+                self.keychain["accessToken"] = accessToken
+                self.showUserController()
+                
+            case .failure(let error):
+                self.present(error.alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func showUserController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
+        
+        navigationController?.pushViewController(userVC, animated: true)
     }
 }

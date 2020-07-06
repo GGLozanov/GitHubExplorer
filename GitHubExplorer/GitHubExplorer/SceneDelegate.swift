@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let keychain = Keychain(service: "com.example.GitHubExplorer")
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let ghOauthUrl = URLContexts.first(where: { $0.url.scheme == "ghexplorer" })?.url else { return }
@@ -28,6 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
+        
+        setupUI(hasLoggedInUser: keychain["accessToken"] != nil)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -57,7 +62,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 
+extension SceneDelegate {
+    private func setupUI(hasLoggedInUser: Bool) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(identifier: "LoginViewController")
+        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
+        
+        let userNavigationVC = UINavigationController()
+        userNavigationVC.viewControllers = hasLoggedInUser ? [loginVC, userVC] : [loginVC]
+        userNavigationVC.modalPresentationStyle = .fullScreen
+        window?.rootViewController = userNavigationVC
+    }
+}
