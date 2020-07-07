@@ -16,7 +16,7 @@ protocol Coordinator {
     func popRoot(shouldAnimate: Bool) throws
 }
 
-enum NoViewError: Error {
-    case noRootView
-    case noSecondaryViewError(viewControllerType: UIViewController.Type)
+enum NoViewControllerError: Error {
+    case noRootViewController
+    case noSecondaryViewControllerError(type: UIViewController.Type)
 }

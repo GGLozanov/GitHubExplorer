@@ -36,7 +36,7 @@ class MainCoordinator: Coordinator {
         guard let topVC = navigationController.viewControllers.last(where: { (vc) -> Bool in
             !(vc is UserViewController) // pop all controllers until different
         }) else {
-            throw NoViewError.noSecondaryViewError(viewControllerType: UserViewController.self)
+            throw NoViewControllerError.noSecondaryViewControllerError(type: UserViewController.self)
         }
         
         navigationController.popToViewController(topVC, animated: shouldAnimate)
@@ -46,7 +46,7 @@ class MainCoordinator: Coordinator {
         guard let topVC = navigationController.viewControllers.last(where: { (vc) -> Bool in
           !(vc is LoginViewController)
         }) else {
-            throw NoViewError.noRootView
+            throw NoViewControllerError.noRootViewController
         }
         
         navigationController.popToViewController(topVC, animated: shouldAnimate)
