@@ -9,18 +9,26 @@
 import UIKit
 import KeychainAccess
 
-class UserViewController: UIViewController {
+class UserViewController: UIViewController, Storyboarded {
     private let api: GithubAPI = GithubAPI()
     private let keychain = Keychain(service: "com.example.GitHubExplorer")
+  
+    typealias CoordinatorType = MainCoordinator
+    weak var coordinator: CoordinatorType?
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
+        guard let coordinator = coordinator else {
+            fatalError("No coordinator")
+        }
+        
+        coordinator.logout()
+        // FIXME: Invalidate before resetting Issue #5
         keychain["accessToken"] = nil
-        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.title = "Loading user"
