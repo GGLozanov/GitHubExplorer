@@ -49,7 +49,7 @@ class LoginViewController: UIViewController, Storyboarded {
 
 extension LoginViewController {
     private func getUser(withCode code: String) {
-        api.getAccessToken(code: code) { [weak self] (result) in
+        api.call(endpoint: GithubEndpoints.AccessTokenEndpoint.GetToken(code: code)) { [weak self] (result) in
             guard let self = self else { return }
             
             switch result {
