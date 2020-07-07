@@ -15,12 +15,6 @@ extension Notification.Name {
 }
 
 class GithubAPI {
-    enum GHEndpoint {
-        case accessToken(code: String)
-        case user(accessToken: String)
-        case invalidateToken(accessToken: String)
-    }
-    
     private let network: Network
     private let notificationCenter: NotificationCenter
     private let keychain: Keychain
@@ -36,19 +30,19 @@ class GithubAPI {
     }
 
     public func call<T: Endpoint>(endpoint: T, completion: @escaping (Result<T.ModelType, APIError>) -> ()) {
-        network.call(request: endpoint.request) { [endpoint] result in
+        network.call(request: endpoint.request) { result in
             switch result {
             case let .success((data, _)):
                 if !(T.ModelType.self is Empty.Type) {
                     do {
-                        let user = try self.decoder.decode(T.ModelType.self, from: data)
-                        completion(.success(user))
+                        let model = try self.decoder.decode(T.ModelType.self, from: data)
+                        completion(.success(model))
                     } catch {
-                        let _ = endpoint
                         print("[GithubAPI] Could not parse response in get_user call")
                         completion(.failure(.github))
                     }
-                } else {
+                }
+                else {
                     completion(.success(Empty() as! T.ModelType))
                 }
             case let .failure(networkError):

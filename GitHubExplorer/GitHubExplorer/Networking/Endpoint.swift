@@ -24,9 +24,6 @@ extension Endpoint {
         request.httpMethod = verb.rawValue
         request.allHTTPHeaderFields = headers
         
-        // decide query params or body here using verb enum
-        // change the request by passing it as an inout var
-        // (can't do it otherwise since it's a struct and they're passed by value)
         switch verb {
         case .GET:
             var requestURLComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
@@ -75,7 +72,7 @@ struct GithubEndpoints {
         struct GetToken: Endpoint {
             let code: String
             
-            typealias ModelType = String
+            typealias ModelType = AuthorizationResponse
             var parameters: [String : Any]  {
                 return [
                     "code" : code,
@@ -121,11 +118,11 @@ extension GithubEndpoints {
     private static let oauthURL = URL(string: "https://github.com/login/oauth")!
     
     private static let secretParams = [
-        
+        "client_secret" : Secrets.client_secret
     ]
     
     private static let defaultParams = [
-        "client_id" : "3fed7e1efcc8b36c1336" // TODO: hide and put somewhere else
+        "client_id" : Secrets.client_id
     ]
     
     private static let defaultHeaders = [

@@ -53,8 +53,9 @@ extension LoginViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let accessToken):
-                self.keychain["accessToken"] = accessToken
+            case .success(let accessToken): // this is not actually the token, but the decoded response json into our AuthorizationResponse struct
+                let token = accessToken.access_token
+                self.keychain["accessToken"] = token
                 self.coordinator?.navigateToUser()
             
             case .failure(let error):

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB70310C24B4DF06003349E4 /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */; };
+		AB70310E24B4FEB6003349E4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310D24B4FEB6003349E4 /* Secrets.swift */; };
 		B14AA74924AF2604004B334A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74824AF2604004B334A /* Network.swift */; };
 		B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */; };
 		B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDB724AF385900D78E13 /* GithubAPI.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationResponse.swift; sourceTree = "<group>"; };
+		AB70310D24B4FEB6003349E4 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		B14AA74824AF2604004B334A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkProvider.swift"; sourceTree = "<group>"; };
 		B15BCDB724AF385900D78E13 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				B15BCDBA24AF38AC00D78E13 /* User.swift */,
+				AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 				B407B61324ACE1530098CEFA /* Assets.xcassets */,
 				B407B61524ACE1530098CEFA /* LaunchScreen.storyboard */,
 				B407B61824ACE1530098CEFA /* Info.plist */,
+				AB70310D24B4FEB6003349E4 /* Secrets.swift */,
 			);
 			path = GitHubExplorer;
 			sourceTree = "<group>";
@@ -282,10 +288,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1E71E8124B47C3E000BF677 /* Endpoint.swift in Sources */,
+				AB70310E24B4FEB6003349E4 /* Secrets.swift in Sources */,
 				B15BCDC324AF4ED600D78E13 /* LoginViewController.swift in Sources */,
 				B407B63E24B356C40098CEFA /* MainCoordinator.swift in Sources */,
 				B15BCDDA24B32DBF00D78E13 /* UserViewController.swift in Sources */,
 				B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */,
+				AB70310C24B4DF06003349E4 /* AuthorizationResponse.swift in Sources */,
 				B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */,
 				B407B64024B356D80098CEFA /* Storyboarded.swift in Sources */,
 				B14AA74924AF2604004B334A /* Network.swift in Sources */,
