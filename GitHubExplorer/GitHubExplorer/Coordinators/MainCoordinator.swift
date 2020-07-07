@@ -23,9 +23,6 @@ class MainCoordinator: Coordinator {
         }
     }
     
-    // FIXME: Generalise all these methods (important)
-    // and avoid repitition
-    
     func logout() {
         navigationController.popToRootViewController(animated: true)
     }
