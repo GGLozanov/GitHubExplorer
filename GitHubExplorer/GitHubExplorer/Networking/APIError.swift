@@ -37,25 +37,33 @@ extension GithubAPI {
             }
         }
         
-        var alert: UIAlertController {
+        func alert(onAuthenticationError: (() -> ())? = nil,
+                   onNetworkError: (() -> ())? = nil,
+                   onGithubError: (() -> ())? = nil) -> UIAlertController {
             let title: String
             let message: String
+            let handler: (() -> ())?
+            
             switch self {
             case .authentication:
                 title = "Authentication failed"
                 message = "Please login again"
+                handler = onAuthenticationError
                 
             case .network:
                 title = "Network error"
                 message = "Please check your network connection"
+                handler = onNetworkError
                 
             case .github:
                 title = "Github error"
                 message = "Please try again in a few moments"
+                handler = onGithubError
             }
             
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let action = UIAlertAction(title: "OK", style: .default) { _ in handler?() }
+            alert.addAction(action)
             
             return alert
         }

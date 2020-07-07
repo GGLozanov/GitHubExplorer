@@ -18,6 +18,7 @@ class GithubAPI {
     enum GHEndpoint {
         case accessToken(code: String)
         case user(accessToken: String)
+        case invalidateToken(accessToken: String)
     }
     
     private let network: Network
@@ -91,6 +92,25 @@ class GithubAPI {
         }
     }
     
+    func invalidateAccessToken(completion: @escaping (Result<Void, APIError>) -> ()) {
+        guard let accessToken = keychain["accessToken"] else {
+                 completion(.failure(.authentication))
+                 return
+        }
+        
+        let endpoint = GHEndpoint.invalidateToken(accessToken: accessToken)
+        let request = initRequest(for: endpoint, requestURL: baseURL)
+        
+        network.call(request: request) { result in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case let .failure(networkError):
+                completion(.failure(APIError.error(from: networkError)))
+            }
+        }
+    }
+    
     func extractAccessCode(from url: URL) {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
         guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
@@ -129,7 +149,7 @@ extension GithubAPI {
             }
             
             request.url = requestURLComponents.url!;
-        case .POST:
+        case .POST, .DELETE:
             request.httpBody = dictionaryToJsonString(endpoint.parameters).data(using: .utf8)
         }
         
@@ -139,8 +159,10 @@ extension GithubAPI {
 
 
 extension GithubAPI {
+    private static let secretParams = [
+    ]
+    
     private static let defaultParams = [
-        "client_secret" : "",
         "client_id" : "3fed7e1efcc8b36c1336" // TODO: hide and put somewhere else
     ]
     
@@ -164,8 +186,13 @@ extension GithubAPI.GHEndpoint {
             return [
                 "code" : code,
             ].merging(GithubAPI.defaultParams) { (current, _) in current }
+                .merging(GithubAPI.secretParams) { (current, _) in current }
         case .user:
             return GithubAPI.defaultParams
+        case .invalidateToken(let token):
+            return [
+                "access_token" : token
+            ]
         }
     }
     
@@ -175,6 +202,11 @@ extension GithubAPI.GHEndpoint {
             return GithubAPI.authHeaders(token: accessToken).merging(GithubAPI.defaultHeaders) { current, _ in current } // use token for modified auth header enum
         case .accessToken:
             return GithubAPI.defaultHeaders
+        case .invalidateToken:
+            let username = GithubAPI.defaultParams["client_id"] ?? ""
+            let password = GithubAPI.secretParams["client_secret"] ?? ""
+            let base64Encoded = basicAuthToken(username: username, password: password)
+            return GithubAPI.defaultHeaders.merging(["Authorization" : "Basic \(base64Encoded)"]) { current, _ in current }
         }
     }
     
@@ -184,6 +216,8 @@ extension GithubAPI.GHEndpoint {
             return "/access_token"
         case .user:
             return "/user"
+        case .invalidateToken:
+            return "/applications/\(GithubAPI.defaultParams["client_id"]!)/grant"
         }
     }
     
@@ -193,6 +227,13 @@ extension GithubAPI.GHEndpoint {
             return Network.RequestVerb.POST
         case .user:
             return Network.RequestVerb.GET
+        case .invalidateToken:
+            return Network.RequestVerb.DELETE
         }
+    }
+    
+    private func basicAuthToken(username: String, password: String) -> String {
+        let unencoded = "\(username):\(password)"
+        return unencoded.data(using: .utf8)!.base64EncodedString()
     }
 }

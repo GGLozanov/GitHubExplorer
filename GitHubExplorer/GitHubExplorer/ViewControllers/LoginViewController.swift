@@ -58,7 +58,7 @@ extension LoginViewController {
                 self.coordinator?.navigateToUser()
             
             case .failure(let error):
-                self.present(error.alert, animated: true, completion: nil)
+                self.present(error.alert(), animated: true, completion: nil)
             }
         }
     }

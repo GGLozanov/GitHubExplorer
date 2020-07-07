@@ -21,9 +21,17 @@ class UserViewController: UIViewController, Storyboarded {
             fatalError("No coordinator")
         }
         
-        coordinator.logout()
         // FIXME: Invalidate before resetting Issue #5
-        keychain["accessToken"] = nil
+        api.invalidateAccessToken { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                coordinator.logout()
+                self.keychain["accessToken"] = nil
+            case .failure(let error):
+                self.present(error.alert(), animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -33,12 +41,16 @@ class UserViewController: UIViewController, Storyboarded {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.title = "Loading user"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+            
         api.getUser() { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .failure(let error):
-                self.present(error.alert, animated: true, completion: nil)
+                let alert = error.alert(onAuthenticationError: {
+                    self.coordinator?.logout()
+                    self.keychain["accessToken"] = nil
+                })
+                self.present(alert, animated: true, completion: nil)
             case .success(let user):
                 self.navigationItem.title = user.username
             }

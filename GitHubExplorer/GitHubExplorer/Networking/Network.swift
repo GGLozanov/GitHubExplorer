@@ -19,6 +19,7 @@ class Network {
     enum RequestVerb: String {
         case POST
         case GET
+        case DELETE
     }
     
     private let session: NetworkProvider
