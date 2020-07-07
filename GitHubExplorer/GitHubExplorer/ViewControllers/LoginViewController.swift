@@ -62,11 +62,4 @@ extension LoginViewController {
             }
         }
     }
-    
-//    private func showUserController() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let userVC = storyboard.instantiateViewController(identifier: "UserViewController")
-//
-//        navigationController?.pushViewController(userVC, animated: true)
-//    }
 }

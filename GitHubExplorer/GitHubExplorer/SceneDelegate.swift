@@ -44,12 +44,8 @@ extension SceneDelegate {
         
         coordinator = MainCoordinator(navigationController: userNavigationVC)
         
-        // Changed to also include login view in userlogin
         if(hasLoggedInUser) {
-            coordinator?.navigateToRoot(shouldAnimate: false) // don't show adding root view
-            coordinator?.navigateToUser()
-        } else {
-            coordinator?.navigateToRoot()
+            coordinator?.navigateToUser(shouldAnimate: false)
         }
                 
         window?.rootViewController = userNavigationVC

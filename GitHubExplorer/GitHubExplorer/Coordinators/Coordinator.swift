@@ -11,9 +11,6 @@ import UIKit
 protocol Coordinator {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
-    
-    func navigateToRoot(shouldAnimate: Bool)
-    func popRoot(shouldAnimate: Bool) throws
 }
 
 enum NoViewControllerError: Error {

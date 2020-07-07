@@ -14,20 +14,21 @@ class UserViewController: UIViewController, Storyboarded {
     private let keychain = Keychain(service: "com.example.GitHubExplorer")
   
     typealias CoordinatorType = MainCoordinator
-    var coordinator: CoordinatorType?
+    weak var coordinator: CoordinatorType?
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
-        keychain["accessToken"] = nil
-        do {
-            try coordinator?.popUser()
-        } catch {
-            print("No root VC left to pop!")
+        guard let coordinator = coordinator else {
+            fatalError("No coordinator")
         }
+        
+        coordinator.logout()
+        // FIXME: Invalidate before resetting Issue #5
+        keychain["accessToken"] = nil
     }
     
     override func viewDidLoad() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.title = "Loading user"
