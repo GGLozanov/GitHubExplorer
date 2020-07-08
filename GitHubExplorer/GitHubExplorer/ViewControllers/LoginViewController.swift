@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, Storyboarded {
         let urlString = "https://github.com/login/oauth/authorize"
         var urlComponents = URLComponents(url: URL(string: urlString)!, resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "3fed7e1efcc8b36c1336")
+            URLQueryItem(name: "client_id", value: Secrets.clientId)
         ]
         
         UIApplication.shared.open(urlComponents.url!)

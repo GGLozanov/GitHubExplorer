@@ -118,11 +118,11 @@ extension GithubEndpoints {
     private static let oauthURL = URL(string: "https://github.com/login/oauth")!
     
     private static let secretParams = [
-        "client_secret" : Secrets.client_secret
+        "client_secret" : Secrets.clientSecret
     ]
     
     private static let defaultParams = [
-        "client_id" : Secrets.client_id
+        "client_id" : Secrets.clientId
     ]
     
     private static let defaultHeaders = [
