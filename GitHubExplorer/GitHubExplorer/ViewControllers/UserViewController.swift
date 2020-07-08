@@ -16,6 +16,8 @@ class UserViewController: UIViewController, Storyboarded {
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
     
+    @IBOutlet var profileImage: UIImageView!
+    
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator else {
             fatalError("No coordinator")
@@ -63,6 +65,15 @@ class UserViewController: UIViewController, Storyboarded {
                     self.showAlert(fromApiError: error)
                 case .success(let user):
                     self.navigationItem.title = user.username
+                    
+                    Network.instance.call(request: URLRequest(url: URL(string: user.profileImageURL)!)) { [weak self] (result) in
+                        switch result {
+                        case .success(let (data, _)):
+                            self?.profileImage.image = UIImage(data: data)
+                        case .failure(let networkError):
+                            self?.present(networkError.alert, animated: true, completion: nil)
+                        }
+                    }
                 }
             }
         } catch {
