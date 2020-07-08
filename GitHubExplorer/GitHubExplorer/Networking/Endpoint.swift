@@ -113,7 +113,7 @@ struct GithubEndpoints {
 }
 
 extension GithubEndpoints {
-    private static let accessToken = Keychain(service: "com.example.GitHubExplorer")["accessToken"]
+    private static var accessToken: String? { Keychain(service: "com.example.GitHubExplorer")["accessToken"] }
     private static let apiURL = URL(string: "https://api.github.com")!
     private static let oauthURL = URL(string: "https://github.com/login/oauth")!
     
