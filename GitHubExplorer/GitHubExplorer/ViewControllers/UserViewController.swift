@@ -17,6 +17,9 @@ class UserViewController: UIViewController, Storyboarded {
     weak var coordinator: CoordinatorType?
     
     @IBOutlet var profileImage: UIImageView!
+    @IBOutlet var repoCountLabel: UILabel!
+    @IBOutlet var followingCountLabel: UILabel!
+    @IBOutlet var followerCountLabel: UILabel!
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator else {
@@ -55,39 +58,49 @@ class UserViewController: UIViewController, Storyboarded {
         navigationItem.title = "Loading user"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        
-        do {
-            let getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
-            api.call(endpoint: getUserEndpoint) { [weak self] (result) in
-                guard let self = self else { return }
-                switch result {
-                case .failure(let error):
-                    self.showAlert(fromApiError: error)
-                case .success(let user):
-                    self.navigationItem.title = user.username
-                    
-                    Network.instance.call(request: URLRequest(url: URL(string: user.profileImageURL)!)) { [weak self] (result) in
-                        switch result {
-                        case .success(let (data, _)):
-                            self?.profileImage.image = UIImage(data: data)
-                        case .failure(let networkError):
-                            self?.present(networkError.alert, animated: true, completion: nil)
-                        }
-                    }
-                }
-            }
-        } catch {
-            if let apiError = error as? GithubAPI.APIError {
-                showAlert(fromApiError: apiError)
-            } else {
-                //FIXME: Show alert for some other error
-                // No other errors are thrown at the moment
-            }
-        }
+        self.loadUser()
     }
 }
 
 extension UserViewController {
+    private func loadUser() {
+        var getUserEndpoint: GithubEndpoints.UserEndpoint.GetUser
+        
+        do {
+            getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
+        } catch {
+            if let apiError = error as? GithubAPI.APIError {
+                showAlert(fromApiError: apiError)
+            } else {
+                assert(false, "No handling for new error yet")
+            }
+            return
+        }
+        
+        api.call(endpoint: getUserEndpoint) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .failure(let error):
+                self.showAlert(fromApiError: error)
+            case .success(let user):
+                self.navigationItem.title = user.username
+                
+                Network.instance.call(request: URLRequest(url: URL(string: user.profileImageURL)!)) { [weak self] (result) in
+                    switch result {
+                    case .success(let (data, _)):
+                        self?.profileImage.image = UIImage(data: data)
+                    case .failure(let networkError):
+                        self?.present(networkError.alert, animated: true, completion: nil)
+                    }
+                }
+                
+                self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
+                self.followerCountLabel.text = "Follower count: \(user.followerCount)"
+                self.followingCountLabel.text = "Following count: \(user.followingCount)"
+            }
+        }
+    }
+    
     private func showAlert(fromApiError error: GithubAPI.APIError) {
         let alert = error.alert(onAuthenticationError: {
             self.coordinator?.logout()

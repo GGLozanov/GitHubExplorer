@@ -46,18 +46,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="03.png" translatesAutoresizingMaskIntoConstraints="NO" id="j9g-lf-wP3">
-                                <rect key="frame" x="50" y="138" width="314" height="314"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Fzq-q4-wyD">
+                                <rect key="frame" x="20" y="208" width="374" height="560"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="03.png" translatesAutoresizingMaskIntoConstraints="NO" id="j9g-lf-wP3">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="374" id="Qk9-Ol-cML"/>
+                                            <constraint firstAttribute="width" constant="374" id="Vsa-RA-xNZ"/>
+                                            <constraint firstAttribute="width" secondItem="j9g-lf-wP3" secondAttribute="height" id="zD1-TF-dfH"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2o-iv-giM">
+                                        <rect key="frame" x="0.0" y="386" width="374" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uns-35-pRx">
+                                        <rect key="frame" x="0.0" y="448" width="374" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vh-Ev-Woy">
+                                        <rect key="frame" x="0.0" y="510" width="374" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="j9g-lf-wP3" secondAttribute="height" id="zD1-TF-dfH"/>
+                                    <constraint firstItem="j9g-lf-wP3" firstAttribute="top" secondItem="Fzq-q4-wyD" secondAttribute="top" id="1hg-hf-I8p"/>
+                                    <constraint firstAttribute="trailing" secondItem="j9g-lf-wP3" secondAttribute="trailing" id="WiN-CS-PBr"/>
+                                    <constraint firstItem="j9g-lf-wP3" firstAttribute="leading" secondItem="Fzq-q4-wyD" secondAttribute="leading" id="naU-v9-KBT"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="j9g-lf-wP3" firstAttribute="centerX" secondItem="avI-K9-lqw" secondAttribute="centerX" id="N2q-pg-cj5"/>
-                            <constraint firstItem="j9g-lf-wP3" firstAttribute="top" secondItem="avI-K9-lqw" secondAttribute="top" constant="50" id="akQ-gc-JC7"/>
-                            <constraint firstItem="j9g-lf-wP3" firstAttribute="leading" secondItem="avI-K9-lqw" secondAttribute="leading" constant="50" id="e6Q-vs-VIR"/>
+                            <constraint firstItem="Fzq-q4-wyD" firstAttribute="top" secondItem="avI-K9-lqw" secondAttribute="top" constant="120" id="apb-Ha-C6R"/>
+                            <constraint firstItem="Fzq-q4-wyD" firstAttribute="leading" secondItem="avI-K9-lqw" secondAttribute="leading" constant="20" id="e6i-OZ-TYy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="avI-K9-lqw"/>
                     </view>
@@ -70,12 +99,15 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="followerCountLabel" destination="1Vh-Ev-Woy" id="D5f-hw-12p"/>
+                        <outlet property="followingCountLabel" destination="uns-35-pRx" id="ZtC-Pq-KA9"/>
                         <outlet property="profileImage" destination="j9g-lf-wP3" id="IZB-fS-aZW"/>
+                        <outlet property="repoCountLabel" destination="Y2o-iv-giM" id="gLh-AB-1PH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMM-uD-Lgr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055" y="138"/>
+            <point key="canvasLocation" x="1053.6231884057972" y="137.94642857142856"/>
         </scene>
     </scenes>
     <resources>
