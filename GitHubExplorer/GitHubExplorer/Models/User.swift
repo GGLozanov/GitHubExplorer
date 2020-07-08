@@ -14,6 +14,7 @@ struct User: Codable {
         case email
         case nickname = "name"
         case description = "bio"
+        case location
         
         case profileImageURL = "avatar_url"
         case reposURL = "repos_url"
@@ -25,9 +26,10 @@ struct User: Codable {
     
     let username: String
     let email: String
-    let nickname: String
-    let description: String
-
+    let nickname: String?
+    let description: String?
+    let location: String?
+    
     let profileImageURL: String
     let reposURL: String
     

@@ -17,9 +17,15 @@ class UserViewController: UIViewController, Storyboarded {
     weak var coordinator: CoordinatorType?
     
     @IBOutlet var profileImage: UIImageView!
-    @IBOutlet var repoCountLabel: UILabel!
+    
     @IBOutlet var followingCountLabel: UILabel!
     @IBOutlet var followerCountLabel: UILabel!
+    
+    @IBOutlet var nicknameLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    
+    @IBOutlet var repoCountLabel: UILabel!
+    @IBOutlet var emailLabel: UILabel!
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator else {
@@ -94,9 +100,14 @@ extension UserViewController {
                     }
                 }
                 
-                self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
                 self.followerCountLabel.text = "Follower count: \(user.followerCount)"
                 self.followingCountLabel.text = "Following count: \(user.followingCount)"
+                
+                self.nicknameLabel.text = "Nickname: \(user.nickname ?? "")"
+                self.descriptionLabel.text = "Description: \(user.description ?? "")"
+                
+                self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
+                self.emailLabel.text = "E-mail: \(user.email)"
             }
         }
     }
