@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, Storyboarded {
         let urlString = "https://github.com/login/oauth/authorize"
         var urlComponents = URLComponents(url: URL(string: urlString)!, resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "3fed7e1efcc8b36c1336")
+            URLQueryItem(name: "client_id", value: Secrets.clientId)
         ]
         
         UIApplication.shared.open(urlComponents.url!)
@@ -49,12 +49,13 @@ class LoginViewController: UIViewController, Storyboarded {
 
 extension LoginViewController {
     private func getUser(withCode code: String) {
-        api.getAccessToken(code: code) { [weak self] (result) in
+        api.call(endpoint: GithubEndpoints.AccessTokenEndpoint.GetToken(code: code)) { [weak self] (result) in
             guard let self = self else { return }
             
             switch result {
-            case .success(let accessToken):
-                self.keychain["accessToken"] = accessToken
+            case .success(let accessToken): // this is not actually the token, but the decoded response json into our AuthorizationResponse struct
+                let token = accessToken.access_token
+                self.keychain["accessToken"] = token
                 self.coordinator?.navigateToUser()
             
             case .failure(let error):

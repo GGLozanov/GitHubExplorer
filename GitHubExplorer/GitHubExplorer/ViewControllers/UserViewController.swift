@@ -12,7 +12,7 @@ import KeychainAccess
 class UserViewController: UIViewController, Storyboarded {
     private let api: GithubAPI = GithubAPI()
     private let keychain = Keychain(service: "com.example.GitHubExplorer")
-  
+    
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
     
@@ -22,14 +22,25 @@ class UserViewController: UIViewController, Storyboarded {
         }
         
         // FIXME: Invalidate before resetting Issue #5
-        api.invalidateAccessToken { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                coordinator.logout()
-                self.keychain["accessToken"] = nil
-            case .failure(let error):
-                self.present(error.alert(), animated: true, completion: nil)
+        
+        do {
+            let invalidateAuthenticationsEndpoint = try GithubEndpoints.ApplicationsEndpoint.InvalidateAuthentications()
+            api.call(endpoint: invalidateAuthenticationsEndpoint) { [weak self] (result) in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    coordinator.logout()
+                    self.keychain["accessToken"] = nil
+                case .failure(let error):
+                    self.showAlert(fromApiError: error)
+                }
+            }
+        } catch {
+            if let apiError = error as? GithubAPI.APIError {
+                showAlert(fromApiError: apiError)
+            } else {
+                //FIXME: Show alert for some other error
+                // No other errors are thrown at the moment
             }
         }
     }
@@ -41,19 +52,36 @@ class UserViewController: UIViewController, Storyboarded {
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.title = "Loading user"
         navigationController?.navigationBar.prefersLargeTitles = true
-            
-        api.getUser() { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .failure(let error):
-                let alert = error.alert(onAuthenticationError: {
-                    self.coordinator?.logout()
-                    self.keychain["accessToken"] = nil
-                })
-                self.present(alert, animated: true, completion: nil)
-            case .success(let user):
-                self.navigationItem.title = user.username
+        
+        
+        do {
+            let getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
+            api.call(endpoint: getUserEndpoint) { [weak self] (result) in
+                guard let self = self else { return }
+                switch result {
+                case .failure(let error):
+                    self.showAlert(fromApiError: error)
+                case .success(let user):
+                    self.navigationItem.title = user.username
+                }
+            }
+        } catch {
+            if let apiError = error as? GithubAPI.APIError {
+                showAlert(fromApiError: apiError)
+            } else {
+                //FIXME: Show alert for some other error
+                // No other errors are thrown at the moment
             }
         }
+    }
+}
+
+extension UserViewController {
+    private func showAlert(fromApiError error: GithubAPI.APIError) {
+        let alert = error.alert(onAuthenticationError: {
+            self.coordinator?.logout()
+            self.keychain["accessToken"] = nil
+        })
+        self.present(alert, animated: true, completion: nil)
     }
 }

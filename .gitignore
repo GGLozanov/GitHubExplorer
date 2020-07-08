@@ -68,3 +68,5 @@ iOSInjectionProject/
 .bin
 .gems
 .idea
+
+Secrets.swift
