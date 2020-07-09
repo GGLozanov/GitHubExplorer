@@ -98,7 +98,7 @@ extension UserViewController {
     }
 }
 
-extension UserViewController : Alert {
+extension UserViewController {
     private func loadUserUI() {
         func renderOptionalLabelText(label: UILabel, text: String?, prefix: String) {
             if let text = text {
