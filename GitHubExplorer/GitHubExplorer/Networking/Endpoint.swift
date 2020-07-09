@@ -52,6 +52,7 @@ struct GithubEndpoints {
             private let accessToken: String
             
             typealias ModelType = User
+            
             var parameters: [String : Any] = GithubEndpoints.defaultParams
             var url: URL = GithubEndpoints.apiURL.appendingPathComponent("/user")
             var headers: [String : String]  {
@@ -66,6 +67,28 @@ struct GithubEndpoints {
                 self.accessToken = accessToken
             }
         }
+        
+        struct ListUserRepos: Endpoint{
+            private let accessToken: String
+            
+            typealias ModelType = [Repository]
+        
+            var parameters: [String : Any] = GithubEndpoints.defaultParams
+            var url: URL
+            var headers: [String : String]  {
+                GithubEndpoints.authHeaders(token: accessToken).merging(GithubEndpoints.defaultHeaders) { current, _ in current }
+            }
+            var verb: Network.RequestVerb = .GET
+        
+            init(token: String, url: URL) {
+                self.accessToken = token
+                self.url = url
+            }
+        }
+        
+        //struct ShowSingleRepo: Endpoint{
+            //private let repo: Repository
+        //}
     }
     
     struct AccessTokenEndpoint {
@@ -73,6 +96,7 @@ struct GithubEndpoints {
             let code: String
             
             typealias ModelType = AuthorizationResponse
+            
             var parameters: [String : Any]  {
                 return [
                     "code" : code,
@@ -122,7 +146,8 @@ extension GithubEndpoints {
     ]
     
     private static let defaultParams = [
-        "client_id" : Secrets.clientId
+        "client_id" : Secrets.clientId,
+        "scope" : "repo" // FIXME: probably not allow everything later on
     ]
     
     private static let defaultHeaders = [

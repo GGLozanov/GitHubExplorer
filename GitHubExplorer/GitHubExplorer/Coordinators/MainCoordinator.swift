@@ -32,4 +32,12 @@ class MainCoordinator: Coordinator {
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: shouldAnimate)
     }
+    
+    func showRepos(userURL: URL) {
+        let vc = ReposViewController.instantiate()
+        vc.coordinator = self
+        vc.reposURL = userURL
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
 }
