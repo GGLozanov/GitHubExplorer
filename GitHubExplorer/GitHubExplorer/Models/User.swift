@@ -25,12 +25,12 @@ struct User: Codable {
     }
     
     let username: String
-    let email: String
+    let email: String?
     let nickname: String?
     let description: String?
     let location: String?
     
-    let profileImageURL: String
+    let profileImageURL: String?
     let reposURL: String
     
     let publicRepoCount: Int

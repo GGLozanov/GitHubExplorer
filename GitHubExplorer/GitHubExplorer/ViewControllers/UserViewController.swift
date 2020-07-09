@@ -110,24 +110,29 @@ extension UserViewController {
             case .success(let user):
                 self.navigationItem.title = user.username
                 self.user = user
-        
-                Network.instance.call(request: URLRequest(url: URL(string: user.profileImageURL)!)) { [weak self] (result) in
-                    switch result {
-                    case .success(let (data, _)):
-                        self?.profileImage.image = UIImage(data: data)
-                    case .failure(let networkError):
-                        self?.present(networkError.alert, animated: true, completion: nil)
+                
+                if let imageURLString = user.profileImageURL, let imageURL = URL(string: imageURLString){
+                    Network.instance.call(request: URLRequest(url: imageURL)) { [weak self] (result) in
+                        switch result {
+                        case .success(let (data, _)):
+                            self?.profileImage.image = UIImage(data: data)
+                        case .failure(let networkError):
+                            self?.present(networkError.alert, animated: true, completion: nil)
+                        }
                     }
                 }
+        
                 
                 self.followerCountLabel.text = "Follower count: \(user.followerCount)"
                 self.followingCountLabel.text = "Following count: \(user.followingCount)"
                 
                 self.nicknameLabel.text = "Nickname: \(user.nickname ?? "")"
                 self.descriptionLabel.text = "Description: \(user.description ?? "")"
-                
                 self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
-                self.emailLabel.text = "E-mail: \(user.email)"
+                guard let text = self.emailLabel.text else {
+                    return
+                }
+                self.emailLabel.text = "\(text)"
             }
         }
     }
