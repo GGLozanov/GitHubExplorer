@@ -26,3 +26,15 @@ extension Storyboarded where Self: UIViewController { // only applicable to UIVi
             // draw identifier from VC class name
     }
 }
+
+extension Storyboarded where Self: UserViewController {
+    static func instantiate(user: User) -> UserViewController {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+                   // get main storyboard instance w/ main bundle alongside it
+               
+        return storyboard.instantiateViewController(identifier: "UserViewController") { coder -> UserViewController? in
+            UserViewController(coder: coder, user: user)
+            }
+           // draw identifier from VC class name
+    }
+}

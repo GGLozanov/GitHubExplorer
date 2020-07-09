@@ -9,7 +9,7 @@
 import UIKit
 import KeychainAccess
 
-protocol Alert{
+protocol Alert {
     func showAlert(fromApiError apiError: GithubAPI.APIError)
 }
 
@@ -17,7 +17,7 @@ protocol KeychainOwner {
     var keychain: Keychain { get }
 }
 
-extension UIViewController: KeychainOwner{
+extension UIViewController: KeychainOwner {
     
     var keychain: Keychain {
         Keychain(service: "com.example.GitHubExplorer")

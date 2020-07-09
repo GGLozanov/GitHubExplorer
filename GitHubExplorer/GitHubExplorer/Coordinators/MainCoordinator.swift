@@ -27,8 +27,8 @@ class MainCoordinator: Coordinator {
         navigationController.popToRootViewController(animated: true)
     }
     
-    func navigateToUser(shouldAnimate: Bool = true) {
-        let vc = UserViewController.instantiate()
+    func navigateToUser(user: User, shouldAnimate: Bool = true) {
+        let vc = UserViewController.instantiate(user: user)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: shouldAnimate)
     }
