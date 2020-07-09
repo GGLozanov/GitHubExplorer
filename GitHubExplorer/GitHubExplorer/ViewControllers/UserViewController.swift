@@ -72,7 +72,7 @@ class UserViewController: UIViewController, Storyboarded {
     
     @IBAction func repositoriesTapped() {
         guard let url = URL(string: user.reposURL) else {
-            #warning("Warn user")
+            self.present(Network.NetworkError.noData.alert, animated: true, completion: nil)
             return
         }
         
