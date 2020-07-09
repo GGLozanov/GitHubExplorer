@@ -62,5 +62,5 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController: Alert{}
+extension LoginViewController: NetworkErrorAlerting{}
 

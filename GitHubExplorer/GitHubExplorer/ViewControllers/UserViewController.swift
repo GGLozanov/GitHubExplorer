@@ -138,7 +138,7 @@ extension UserViewController {
     }
 }
 
-extension UserViewController : Alert{
+extension UserViewController : NetworkErrorAlerting{
     func showAlert(fromApiError error: GithubAPI.APIError) {
         let alert = error.alert(onAuthenticationError: {
             self.coordinator?.logout()

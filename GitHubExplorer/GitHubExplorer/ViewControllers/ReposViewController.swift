@@ -76,7 +76,7 @@ class RepoCell: UITableViewCell {
     
 }
 
-extension ReposViewController: Alert {
+extension ReposViewController: NetworkErrorAlerting {
  
 }
 
