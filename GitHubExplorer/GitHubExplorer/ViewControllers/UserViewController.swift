@@ -11,10 +11,14 @@ import KeychainAccess
 
 class UserViewController: UIViewController, Storyboarded {
     private let api: GithubAPI = GithubAPI()
-    private let keychain = Keychain(service: "com.example.GitHubExplorer")
+    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
+    
+    //var user: User = User()
+    
+    // some button action to go to the reposViewController
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator else {
@@ -32,6 +36,7 @@ class UserViewController: UIViewController, Storyboarded {
                     coordinator.logout()
                     self.keychain["accessToken"] = nil
                 case .failure(let error):
+                    self.coordinator?.logout()
                     self.showAlert(fromApiError: error)
                 }
             }
@@ -53,16 +58,19 @@ class UserViewController: UIViewController, Storyboarded {
         navigationItem.title = "Loading user"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        
         do {
             let getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
             api.call(endpoint: getUserEndpoint) { [weak self] (result) in
                 guard let self = self else { return }
                 switch result {
                 case .failure(let error):
+                    self.coordinator?.logout()
                     self.showAlert(fromApiError: error)
                 case .success(let user):
                     self.navigationItem.title = user.username
+                    //self.user = user
+                    let url = URL(string: user.reposURL)
+                    self.coordinator?.showRepos(userURL: url!) // this should be handled in a button
                 }
             }
         } catch {
@@ -74,14 +82,8 @@ class UserViewController: UIViewController, Storyboarded {
             }
         }
     }
+    
 }
 
-extension UserViewController {
-    private func showAlert(fromApiError error: GithubAPI.APIError) {
-        let alert = error.alert(onAuthenticationError: {
-            self.coordinator?.logout()
-            self.keychain["accessToken"] = nil
-        })
-        self.present(alert, animated: true, completion: nil)
-    }
+extension UserViewController : Alert{
 }

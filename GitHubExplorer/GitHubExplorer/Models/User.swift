@@ -11,7 +11,9 @@ import Foundation
 struct User: Codable {
     enum CodingKeys: String, CodingKey {
         case username = "login"
+        case reposURL = "repos_url"
     }
     
     let username: String
+    let reposURL: String
 }

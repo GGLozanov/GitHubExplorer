@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -60,6 +60,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMM-uD-Lgr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1055" y="138"/>
+        </scene>
+        <!--Repos View Controller-->
+        <scene sceneID="BtA-pp-uEg">
+            <objects>
+                <viewController storyboardIdentifier="ReposViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j7f-nM-xQ7" userLabel="Repos View Controller" customClass="ReposViewController" customModule="GitHubExplorer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iN9-2F-8WH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wxP-JK-jc5">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="repoCell" rowHeight="80" id="7df-3n-0AL" customClass="RepoCell" customModule="GitHubExplorer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7df-3n-0AL" id="BSJ-3L-26K">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="ZUB-6U-4HL">
+                                                    <rect key="frame" x="30" y="30" width="186" height="39"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="centerY" secondItem="BSJ-3L-26K" secondAttribute="centerY" constant="9.5" id="1A1-O7-F2O"/>
+                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="leading" secondItem="BSJ-3L-26K" secondAttribute="leading" constant="30" id="9Bk-if-7TT"/>
+                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="width" secondItem="BSJ-3L-26K" secondAttribute="height" multiplier="3:4" constant="126" id="XWp-86-UhG"/>
+                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="top" secondItem="BSJ-3L-26K" secondAttribute="top" constant="30" id="fxc-Kw-XPO"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZUB-6U-4HL" secondAttribute="trailing" constant="198" id="wb2-G3-Ikt"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="repoName" destination="ZUB-6U-4HL" id="ghA-Dx-Jl4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wxP-JK-jc5" firstAttribute="top" secondItem="oG3-td-wci" secondAttribute="top" id="Y7K-mF-BcZ"/>
+                            <constraint firstItem="wxP-JK-jc5" firstAttribute="leading" secondItem="oG3-td-wci" secondAttribute="leading" id="dFu-9j-iMw"/>
+                            <constraint firstItem="oG3-td-wci" firstAttribute="bottom" secondItem="wxP-JK-jc5" secondAttribute="bottom" id="kVj-tN-o9I"/>
+                            <constraint firstItem="oG3-td-wci" firstAttribute="trailing" secondItem="wxP-JK-jc5" secondAttribute="trailing" id="t1r-fk-ehF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oG3-td-wci"/>
+                    </view>
+                    <connections>
+                        <outlet property="reposTableView" destination="wxP-JK-jc5" id="bSS-dK-i6V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="keO-ed-OSG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="793.52678571428567"/>
         </scene>
     </scenes>
 </document>

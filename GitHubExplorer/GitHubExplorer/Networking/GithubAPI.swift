@@ -38,7 +38,7 @@ class GithubAPI {
                         let model = try self.decoder.decode(T.ModelType.self, from: data)
                         completion(.success(model))
                     } catch {
-                        print("[GithubAPI] Could not parse response in get_user call")
+                        print("[GithubAPI] Could not parse response in the api call: \((error as NSError).debugDescription)")
                         completion(.failure(.github))
                     }
                 }

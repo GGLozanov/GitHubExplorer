@@ -13,3 +13,4 @@ protocol NetworkProvider {
 }
 
 extension URLSession: NetworkProvider {}
+

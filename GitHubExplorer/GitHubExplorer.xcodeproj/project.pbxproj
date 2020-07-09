@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AB70310C24B4DF06003349E4 /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */; };
 		AB70310E24B4FEB6003349E4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310D24B4FEB6003349E4 /* Secrets.swift */; };
+		AB70311024B5BD3C003349E4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310F24B5BD3C003349E4 /* Repository.swift */; };
+		AB70311224B5C150003349E4 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70311124B5C150003349E4 /* ReposViewController.swift */; };
+		AB70311A24B61A99003349E4 /* AlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70311924B61A99003349E4 /* AlertProtocol.swift */; };
 		B14AA74924AF2604004B334A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74824AF2604004B334A /* Network.swift */; };
 		B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */; };
 		B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDB724AF385900D78E13 /* GithubAPI.swift */; };
@@ -43,6 +46,9 @@
 /* Begin PBXFileReference section */
 		AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationResponse.swift; sourceTree = "<group>"; };
 		AB70310D24B4FEB6003349E4 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		AB70310F24B5BD3C003349E4 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		AB70311124B5C150003349E4 /* ReposViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
+		AB70311924B61A99003349E4 /* AlertProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertProtocol.swift; sourceTree = "<group>"; };
 		B14AA74824AF2604004B334A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		B14AA74B24AF2837004B334A /* URLSession+NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkProvider.swift"; sourceTree = "<group>"; };
 		B15BCDB724AF385900D78E13 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 			children = (
 				B15BCDBA24AF38AC00D78E13 /* User.swift */,
 				AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */,
+				AB70310F24B5BD3C003349E4 /* Repository.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -112,6 +119,8 @@
 			children = (
 				B15BCDC224AF4ED600D78E13 /* LoginViewController.swift */,
 				B15BCDD924B32DBF00D78E13 /* UserViewController.swift */,
+				AB70311124B5C150003349E4 /* ReposViewController.swift */,
+				AB70311924B61A99003349E4 /* AlertProtocol.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -287,11 +296,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB70311224B5C150003349E4 /* ReposViewController.swift in Sources */,
 				B1E71E8124B47C3E000BF677 /* Endpoint.swift in Sources */,
 				AB70310E24B4FEB6003349E4 /* Secrets.swift in Sources */,
 				B15BCDC324AF4ED600D78E13 /* LoginViewController.swift in Sources */,
 				B407B63E24B356C40098CEFA /* MainCoordinator.swift in Sources */,
 				B15BCDDA24B32DBF00D78E13 /* UserViewController.swift in Sources */,
+				AB70311A24B61A99003349E4 /* AlertProtocol.swift in Sources */,
 				B15BCDB824AF385900D78E13 /* GithubAPI.swift in Sources */,
 				AB70310C24B4DF06003349E4 /* AuthorizationResponse.swift in Sources */,
 				B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */,
@@ -300,6 +311,7 @@
 				B407B63024B0B8940098CEFA /* Utils.swift in Sources */,
 				B407B63C24B356080098CEFA /* Coordinator.swift in Sources */,
 				B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */,
+				AB70311024B5BD3C003349E4 /* Repository.swift in Sources */,
 				B15BCDBD24AF4C1B00D78E13 /* APIError.swift in Sources */,
 				B407B60D24ACE1500098CEFA /* SceneDelegate.swift in Sources */,
 				B15BCDBB24AF38AC00D78E13 /* User.swift in Sources */,

@@ -66,6 +66,25 @@ struct GithubEndpoints {
                 self.accessToken = accessToken
             }
         }
+        
+        struct ListUserRepos: Endpoint{
+            private let accessToken: String
+        
+            var parameters: [String : Any] = GithubEndpoints.defaultParams
+            var url: URL
+            var headers: [String : String]  {
+                GithubEndpoints.authHeaders(token: accessToken).merging(GithubEndpoints.defaultHeaders) { current, _ in current }
+            }
+            var verb: Network.RequestVerb = .GET
+            
+            typealias ModelType = [Repository]
+            
+            init(token: String, url: URL) {
+                self.accessToken = token
+                self.url = url
+            }
+            
+        }
     }
     
     struct AccessTokenEndpoint {
@@ -122,7 +141,8 @@ extension GithubEndpoints {
     ]
     
     private static let defaultParams = [
-        "client_id" : Secrets.clientId
+        "client_id" : Secrets.clientId,
+        "scope" : "repo" // probably not allow everything later on
     ]
     
     private static let defaultHeaders = [
