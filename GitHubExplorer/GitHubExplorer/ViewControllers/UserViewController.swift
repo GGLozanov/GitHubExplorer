@@ -61,6 +61,20 @@ class UserViewController: UIViewController, Storyboarded {
         }
     }
     
+    @IBAction func repositoriesTapped() {
+        guard let user = user else {
+            #warning("Warn user")
+            return
+        }
+        
+        guard let url = URL(string: user.reposURL) else {
+            #warning("Warn user")
+            return
+        }
+        
+        coordinator?.showRepos(userURL: url)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(false, animated: true)
