@@ -44,14 +44,14 @@ extension SceneDelegate {
         
         coordinator = MainCoordinator(navigationController: userNavigationVC)
         
-        guard let coordinator = coordinator else {
+        guard let _ = coordinator else {
             fatalError("No coordinator")
         }
         
         if(hasLoggedInUser) {
             GithubAPI().getUserFromStoredToken { result in
                 switch result {
-                case .failure(let error):
+                case .failure:
                     fatalError("This should never fail")
                 case .success(let user):
                     self.coordinator?.navigateToUser(user: user)

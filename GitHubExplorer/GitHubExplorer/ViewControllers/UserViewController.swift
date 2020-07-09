@@ -71,7 +71,7 @@ class UserViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func repositoriesTapped() {
-        guard let url = URL(string: user.reposURL) else {
+          guard let url = URL(string: user.reposURL) else {
             self.present(Network.NetworkError.noData.alert, animated: true, completion: nil)
             return
         }
@@ -107,10 +107,9 @@ extension UserViewController {
                 label.isHidden = true
             }
         }
-        
         self.followerCountLabel.text = "Follower count: \(user.followerCount)"
         self.followingCountLabel.text = "Following count: \(user.followingCount)"
-
+        
         renderOptionalLabelText(label: self.nicknameLabel, text: self.user.nickname, prefix: "Username: ")
         
         renderOptionalLabelText(label: self.descriptionLabel, text: self.user.description, prefix: "Description: ")

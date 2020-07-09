@@ -106,8 +106,6 @@ struct GithubEndpoints {
             var headers = GithubEndpoints.defaultHeaders
             var url = GithubEndpoints.oauthURL.appendingPathComponent("/access_token")
             var verb: Network.RequestVerb = .POST
-            
-            
         }
     }
     

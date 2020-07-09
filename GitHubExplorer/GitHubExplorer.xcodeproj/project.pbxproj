@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB46DB6224B78F42008F083F /* EndpointMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB46DB6124B78F42008F083F /* EndpointMock.swift */; };
+		AB55D64424B75B2300B613F8 /* GithubAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB55D64324B75B2300B613F8 /* GithubAPITest.swift */; };
+		AB55D64624B75F1100B613F8 /* GithubAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB55D64524B75F1100B613F8 /* GithubAPIMock.swift */; };
 		AB70310C24B4DF06003349E4 /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */; };
 		AB70310E24B4FEB6003349E4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310D24B4FEB6003349E4 /* Secrets.swift */; };
 		AB70311024B5BD3C003349E4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB70310F24B5BD3C003349E4 /* Repository.swift */; };
@@ -46,6 +49,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB46DB6124B78F42008F083F /* EndpointMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointMock.swift; sourceTree = "<group>"; };
+		AB55D64324B75B2300B613F8 /* GithubAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPITest.swift; sourceTree = "<group>"; };
+		AB55D64524B75F1100B613F8 /* GithubAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIMock.swift; sourceTree = "<group>"; };
 		AB70310B24B4DF06003349E4 /* AuthorizationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationResponse.swift; sourceTree = "<group>"; };
 		AB70310D24B4FEB6003349E4 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		AB70310F24B5BD3C003349E4 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 				B447B9C224B72EDC0070A00D /* Mocks */,
 				B407B62124ACE1530098CEFA /* NetworkTests.swift */,
 				B407B62324ACE1530098CEFA /* Info.plist */,
+				AB55D64324B75B2300B613F8 /* GithubAPITest.swift */,
 			);
 			path = GitHubExplorerTests;
 			sourceTree = "<group>";
@@ -199,6 +206,8 @@
 			children = (
 				B447B9C324B72F040070A00D /* NetworkProviderMock.swift */,
 				B447B9C724B736EF0070A00D /* URLSessionDataMock.swift */,
+				AB55D64524B75F1100B613F8 /* GithubAPIMock.swift */,
+				AB46DB6124B78F42008F083F /* EndpointMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -338,7 +347,10 @@
 			files = (
 				B447B9C824B736EF0070A00D /* URLSessionDataMock.swift in Sources */,
 				B447B9C424B72F040070A00D /* NetworkProviderMock.swift in Sources */,
+				AB46DB6224B78F42008F083F /* EndpointMock.swift in Sources */,
+				AB55D64624B75F1100B613F8 /* GithubAPIMock.swift in Sources */,
 				B407B62224ACE1530098CEFA /* NetworkTests.swift in Sources */,
+				AB55D64424B75B2300B613F8 /* GithubAPITest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
