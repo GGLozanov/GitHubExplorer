@@ -9,7 +9,7 @@
 import UIKit
 import KeychainAccess
 
-protocol Alert {
+protocol NetworkErrorAlerting{
     func showAlert(fromApiError apiError: GithubAPI.APIError)
 }
 
@@ -24,7 +24,7 @@ extension UIViewController: KeychainOwner {
     }
 }
 
-extension Alert where Self: UIViewController {
+extension NetworkErrorAlerting where Self: UIViewController {
     func showAlert(fromApiError apiError: GithubAPI.APIError){
         self.present(apiError.alert(onAuthenticationError: {
             self.keychain["accessToken"] = nil
