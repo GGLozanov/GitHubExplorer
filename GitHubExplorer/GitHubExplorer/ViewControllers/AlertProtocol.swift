@@ -17,7 +17,7 @@ protocol KeychainOwner {
     var keychain: Keychain { get }
 }
 
-extension UIViewController: KeychainOwner{
+extension UIViewController: KeychainOwner {
     
     var keychain: Keychain {
         Keychain(service: "com.example.GitHubExplorer")

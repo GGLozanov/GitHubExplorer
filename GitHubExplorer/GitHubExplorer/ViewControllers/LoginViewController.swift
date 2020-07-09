@@ -54,7 +54,15 @@ extension LoginViewController {
             case .success(let response):
                 let token = response.access_token
                 self.keychain["accessToken"] = token
-                self.coordinator?.navigateToUser()
+                
+                self.api.getUserFromStoredToken(completion: { result in
+                    switch result {
+                    case .failure(let error):
+                        self.showAlert(fromApiError: error)
+                    case .success(let user):
+                        self.coordinator?.navigateToUser(user: user)
+                    }
+                })
             case .failure(let error):
                 self.showAlert(fromApiError: error)
             }
@@ -62,5 +70,5 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController: NetworkErrorAlerting{}
 
+extension LoginViewController: NetworkErrorAlerting{}

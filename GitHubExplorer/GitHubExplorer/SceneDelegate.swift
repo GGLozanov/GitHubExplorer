@@ -44,8 +44,19 @@ extension SceneDelegate {
         
         coordinator = MainCoordinator(navigationController: userNavigationVC)
         
+        guard let coordinator = coordinator else {
+            fatalError("No coordinator")
+        }
+        
         if(hasLoggedInUser) {
-            coordinator?.navigateToUser(shouldAnimate: false)
+            GithubAPI().getUserFromStoredToken { result in
+                switch result {
+                case .failure(let error):
+                    fatalError("This should never fail")
+                case .success(let user):
+                    self.coordinator?.navigateToUser(user: user)
+                }
+            }
         }
                 
         window?.rootViewController = userNavigationVC

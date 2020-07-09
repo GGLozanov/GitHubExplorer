@@ -16,7 +16,16 @@ class UserViewController: UIViewController, Storyboarded {
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
     
-    var user: User?
+    var user: User
+    
+    init?(coder: NSCoder, user: User) {
+        self.user = user
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // some button action to go to the reposViewController
 
@@ -62,13 +71,8 @@ class UserViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func repositoriesTapped() {
-        guard let user = user else {
-            #warning("Warn user")
-            return
-        }
-        
         guard let url = URL(string: user.reposURL) else {
-            #warning("Warn user")
+            self.present(Network.NetworkError.noData.alert, animated: true, completion: nil)
             return
         }
         
@@ -80,59 +84,51 @@ class UserViewController: UIViewController, Storyboarded {
         navigationController?.setNavigationBarHidden(false, animated: true)
         
         navigationItem.setHidesBackButton(true, animated: false)
-        navigationItem.title = "Loading user"
+        navigationItem.title = user.username
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        self.loadUser()
+        self.loadUserProfileImage()
+        self.loadUserUI()
     }
 }
 
 extension UserViewController {
-    private func loadUser() {
-        var getUserEndpoint: GithubEndpoints.UserEndpoint.GetUser
-        
-        do {
-            getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
-        } catch {
-            if let apiError = error as? GithubAPI.APIError {
-                showAlert(fromApiError: apiError)
+    enum UserViewControllerError: Error {
+        case noUserError
+    }
+}
+
+extension UserViewController : Alert {
+    private func loadUserUI() {
+        func renderOptionalLabelText(label: UILabel, text: String?, prefix: String) {
+            if let text = text {
+                label.text = prefix + text
             } else {
-                assert(false, "No handling for new error yet")
+                label.isHidden = true
             }
-            return
         }
         
-        api.call(endpoint: getUserEndpoint) { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .failure(let error):
-                self.showAlert(fromApiError: error)
-            case .success(let user):
-                self.navigationItem.title = user.username
-                self.user = user
-                
-                if let imageURLString = user.profileImageURL, let imageURL = URL(string: imageURLString){
-                    Network.instance.call(request: URLRequest(url: imageURL)) { [weak self] (result) in
-                        switch result {
-                        case .success(let (data, _)):
-                            self?.profileImage.image = UIImage(data: data)
-                        case .failure(let networkError):
-                            self?.present(networkError.alert, animated: true, completion: nil)
-                        }
-                    }
-                }
+        self.followerCountLabel.text = "Follower count: \(user.followerCount)"
+        self.followingCountLabel.text = "Following count: \(user.followingCount)"
+
+        renderOptionalLabelText(label: self.nicknameLabel, text: self.user.nickname, prefix: "Username: ")
         
-                
-                self.followerCountLabel.text = "Follower count: \(user.followerCount)"
-                self.followingCountLabel.text = "Following count: \(user.followingCount)"
-                
-                self.nicknameLabel.text = "Nickname: \(user.nickname ?? "")"
-                self.descriptionLabel.text = "Description: \(user.description ?? "")"
-                self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
-                guard let text = self.emailLabel.text else {
-                    return
+        renderOptionalLabelText(label: self.descriptionLabel, text: self.user.description, prefix: "Description: ")
+        
+        renderOptionalLabelText(label: self.emailLabel, text: self.user.email, prefix: "Email: ")
+        
+        self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
+    }
+    
+    private func loadUserProfileImage() {
+        if let imageURLString = user.profileImageURL, let imageURL = URL(string: imageURLString){
+            Network.instance.call(request: URLRequest(url: imageURL)) { [weak self] (result) in
+                switch result {
+                case .success(let (data, _)):
+                    self?.profileImage.image = UIImage(data: data)
+                case .failure(let networkError):
+                    self?.present(networkError.alert, animated: true, completion: nil)
                 }
-                self.emailLabel.text = "\(text)"
             }
         }
     }

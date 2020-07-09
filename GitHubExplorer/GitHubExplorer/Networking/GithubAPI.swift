@@ -60,6 +60,30 @@ class GithubAPI {
         
         notificationCenter.post(Notification(name: Notification.Name.oauthCodeExtracted, object: nil, userInfo: ["code" : code]))
     }
+    
+    public func getUserFromStoredToken(completion: @escaping ((Result<User, APIError>) -> ())) {
+        var getUserEndpoint: GithubEndpoints.UserEndpoint.GetUser
+        
+        do {
+            getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
+        } catch {
+            if let apiError = error as? GithubAPI.APIError {
+                completion(.failure(apiError))
+            } else {
+                assert(false, "No handling for new error yet")
+            }
+            return
+        }
+        
+        call(endpoint: getUserEndpoint) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let user):
+                completion(.success(user))
+            }
+        }
+    }
 }
 
 
