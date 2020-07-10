@@ -9,7 +9,7 @@
 import UIKit
 import KeychainAccess
 
-class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded {
+class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, KeychainOwner {
     
     private let api: GithubAPI = GithubAPI()
     //private let keychain = Keychain(service: "com.example.GitHubExplorer")
@@ -33,7 +33,7 @@ class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded {
             return
         }
         
-        let endpoint = GithubEndpoints.UserEndpoint.ListUserRepos(token: token, url: reposURL!)
+        let endpoint = GithubEndpoints.UserEndpoint.ListUserRepos(accessToken: token, url: reposURL!)
         api.call(endpoint: endpoint) { [weak self] (result) in
             guard let self = self else { return }
             switch (result){

@@ -11,6 +11,7 @@ import Foundation
 struct User: Codable {
     enum CodingKeys: String, CodingKey {
         case username = "login"
+        
         case email
         case nickname = "name"
         case description = "bio"
@@ -22,9 +23,11 @@ struct User: Codable {
         case publicRepoCount = "public_repos"
         case followerCount = "followers"
         case followingCount = "following"
+ 
     }
     
     let username: String
+    
     let email: String?
     let nickname: String?
     let description: String?
@@ -36,4 +39,5 @@ struct User: Codable {
     let publicRepoCount: Int
     let followerCount: Int
     let followingCount: Int
+     
 }

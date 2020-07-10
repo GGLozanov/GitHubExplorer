@@ -60,10 +60,7 @@ struct GithubEndpoints {
             }
             var verb: Network.RequestVerb = .GET
             
-            init() throws {
-                guard let accessToken = GithubEndpoints.accessToken else {
-                    throw GithubAPI.APIError.authentication
-                }
+            init(accessToken: String) {
                 self.accessToken = accessToken
             }
         }
@@ -80,8 +77,8 @@ struct GithubEndpoints {
             }
             var verb: Network.RequestVerb = .GET
         
-            init(token: String, url: URL) {
-                self.accessToken = token
+            init(accessToken: String, url: URL) {
+                self.accessToken = accessToken
                 self.url = url
             }
         }
@@ -106,8 +103,6 @@ struct GithubEndpoints {
             var headers = GithubEndpoints.defaultHeaders
             var url = GithubEndpoints.oauthURL.appendingPathComponent("/access_token")
             var verb: Network.RequestVerb = .POST
-            
-            
         }
     }
     
@@ -126,10 +121,7 @@ struct GithubEndpoints {
             var url = GithubEndpoints.apiURL.appendingPathComponent("/applications/\(GithubEndpoints.defaultParams["client_id"]!)/grant")
             var verb: Network.RequestVerb = .DELETE
             
-            init() throws {
-                guard let accessToken = GithubEndpoints.accessToken else {
-                    throw GithubAPI.APIError.authentication
-                }
+            init(accessToken: String) {
                 self.accessToken = accessToken
             }
         }
@@ -137,7 +129,6 @@ struct GithubEndpoints {
 }
 
 extension GithubEndpoints {
-    private static var accessToken: String? { Keychain(service: "com.example.GitHubExplorer")["accessToken"] }
     private static let apiURL = URL(string: "https://api.github.com")!
     private static let oauthURL = URL(string: "https://github.com/login/oauth")!
     

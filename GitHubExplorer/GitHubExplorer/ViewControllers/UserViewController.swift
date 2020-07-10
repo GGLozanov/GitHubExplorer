@@ -9,9 +9,8 @@
 import UIKit
 import KeychainAccess
 
-class UserViewController: UIViewController, Storyboarded {
+class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     private let api: GithubAPI = GithubAPI()
-    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
@@ -47,31 +46,27 @@ class UserViewController: UIViewController, Storyboarded {
         
         // FIXME: Invalidate before resetting Issue #5
         
-        do {
-            let invalidateAuthenticationsEndpoint = try GithubEndpoints.ApplicationsEndpoint.InvalidateAuthentications()
-            api.call(endpoint: invalidateAuthenticationsEndpoint) { [weak self] (result) in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    coordinator.logout()
-                    self.keychain["accessToken"] = nil
-                case .failure(let error):
-                    self.coordinator?.logout()
-                    self.showAlert(fromApiError: error)
-                }
-            }
-        } catch {
-            if let apiError = error as? GithubAPI.APIError {
-                showAlert(fromApiError: apiError)
-            } else {
-                //FIXME: Show alert for some other error
-                // No other errors are thrown at the moment
+        guard let accessToken = self.keychain["accessToken"] else {
+            self.showAlert(fromApiError: GithubAPI.APIError.authentication)
+            return
+        }
+        
+        let invalidateAuthenticationsEndpoint = GithubEndpoints.ApplicationsEndpoint.InvalidateAuthentications(accessToken: accessToken)
+        api.call(endpoint: invalidateAuthenticationsEndpoint) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                coordinator.logout()
+                self.keychain["accessToken"] = nil
+            case .failure(let error):
+                self.coordinator?.logout()
+                self.showAlert(fromApiError: error)
             }
         }
     }
     
     @IBAction func repositoriesTapped() {
-        guard let url = URL(string: user.reposURL) else {
+          guard let url = URL(string: user.reposURL) else {
             self.present(Network.NetworkError.noData.alert, animated: true, completion: nil)
             return
         }
@@ -107,10 +102,9 @@ extension UserViewController {
                 label.isHidden = true
             }
         }
-        
         self.followerCountLabel.text = "Follower count: \(user.followerCount)"
         self.followingCountLabel.text = "Following count: \(user.followingCount)"
-
+        
         renderOptionalLabelText(label: self.nicknameLabel, text: self.user.nickname, prefix: "Username: ")
         
         renderOptionalLabelText(label: self.descriptionLabel, text: self.user.description, prefix: "Description: ")

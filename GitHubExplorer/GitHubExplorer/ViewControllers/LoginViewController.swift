@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import KeychainAccess
 
-class LoginViewController: UIViewController, Storyboarded {
+class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
     @IBOutlet var loginButton: UIButton!
     
     typealias CoordinatorType = MainCoordinator
@@ -19,7 +19,6 @@ class LoginViewController: UIViewController, Storyboarded {
     
     private let api = GithubAPI()
     private let notificationCenter = NotificationCenter.default
-    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     @IBAction func login() {
         let urlString = "https://github.com/login/oauth/authorize"
@@ -55,7 +54,7 @@ extension LoginViewController {
                 let token = response.access_token
                 self.keychain["accessToken"] = token
                 
-                self.api.getUserFromStoredToken(completion: { result in
+                self.api.getUser(accessToken: token, completion: { result in
                     switch result {
                     case .failure(let error):
                         self.showAlert(fromApiError: error)

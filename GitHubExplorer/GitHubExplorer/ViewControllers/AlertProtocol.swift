@@ -17,14 +17,13 @@ protocol KeychainOwner {
     var keychain: Keychain { get }
 }
 
-extension UIViewController: KeychainOwner {
-    
+extension KeychainOwner {
     var keychain: Keychain {
         Keychain(service: "com.example.GitHubExplorer")
     }
 }
 
-extension NetworkErrorAlerting where Self: UIViewController {
+extension NetworkErrorAlerting where Self: UIViewController & KeychainOwner {
     func showAlert(fromApiError apiError: GithubAPI.APIError){
         self.present(apiError.alert(onAuthenticationError: {
             self.keychain["accessToken"] = nil
