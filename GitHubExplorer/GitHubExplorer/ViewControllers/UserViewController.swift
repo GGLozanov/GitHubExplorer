@@ -9,7 +9,7 @@
 import UIKit
 import KeychainAccess
 
-class UserViewController: UIViewController, Storyboarded {
+class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     private let api: GithubAPI = GithubAPI()
     //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
@@ -47,25 +47,21 @@ class UserViewController: UIViewController, Storyboarded {
         
         // FIXME: Invalidate before resetting Issue #5
         
-        do {
-            let invalidateAuthenticationsEndpoint = try GithubEndpoints.ApplicationsEndpoint.InvalidateAuthentications()
-            api.call(endpoint: invalidateAuthenticationsEndpoint) { [weak self] (result) in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    coordinator.logout()
-                    self.keychain["accessToken"] = nil
-                case .failure(let error):
-                    self.coordinator?.logout()
-                    self.showAlert(fromApiError: error)
-                }
-            }
-        } catch {
-            if let apiError = error as? GithubAPI.APIError {
-                showAlert(fromApiError: apiError)
-            } else {
-                //FIXME: Show alert for some other error
-                // No other errors are thrown at the moment
+        guard let accessToken = Keychain(service: "com.example.GitHubExplorer")["accessToken"] else {
+            self.showAlert(fromApiError: GithubAPI.APIError.authentication)
+            return
+        }
+        
+        let invalidateAuthenticationsEndpoint = GithubEndpoints.ApplicationsEndpoint.InvalidateAuthentications(accessToken: accessToken)
+        api.call(endpoint: invalidateAuthenticationsEndpoint) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                coordinator.logout()
+                self.keychain["accessToken"] = nil
+            case .failure(let error):
+                self.coordinator?.logout()
+                self.showAlert(fromApiError: error)
             }
         }
     }

@@ -17,16 +17,13 @@ extension Notification.Name {
 class GithubAPI {
     private let network: Network
     private let notificationCenter: NotificationCenter
-    private let keychain: Keychain
     
     private let decoder = JSONDecoder()
     
     init(network: Network = Network(),
-         notificationCenter: NotificationCenter = .default,
-         keychain: Keychain = Keychain(service: "com.example.GitHubExplorer")) {
+         notificationCenter: NotificationCenter = .default) {
         self.network = network
         self.notificationCenter = notificationCenter
-        self.keychain = keychain
     }
 
     public func call<T: Endpoint>(endpoint: T, completion: @escaping (Result<T.ModelType, APIError>) -> ()) {
@@ -51,7 +48,7 @@ class GithubAPI {
         }
     }
     
-    func extractAccessCode(from url: URL) {
+    func extractAndAnnounceAccessCode(from url: URL) {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
         guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
             notificationCenter.post(name: NSNotification.Name.noCodeInOAuthRedirect, object: nil)
@@ -61,19 +58,10 @@ class GithubAPI {
         notificationCenter.post(Notification(name: Notification.Name.oauthCodeExtracted, object: nil, userInfo: ["code" : code]))
     }
     
-    public func getUserFromStoredToken(completion: @escaping ((Result<User, APIError>) -> ())) {
+    public func getUser(accessToken: String, completion: @escaping ((Result<User, APIError>) -> ())) {
         var getUserEndpoint: GithubEndpoints.UserEndpoint.GetUser
         
-        do {
-            getUserEndpoint = try GithubEndpoints.UserEndpoint.GetUser()
-        } catch {
-            if let apiError = error as? GithubAPI.APIError {
-                completion(.failure(apiError))
-            } else {
-                assert(false, "No handling for new error yet")
-            }
-            return
-        }
+        getUserEndpoint = GithubEndpoints.UserEndpoint.GetUser(accessToken: accessToken)
         
         call(endpoint: getUserEndpoint) { (result) in
             switch result {

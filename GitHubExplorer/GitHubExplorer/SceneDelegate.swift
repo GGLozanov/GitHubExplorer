@@ -9,16 +9,14 @@
 import UIKit
 import KeychainAccess
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, KeychainOwner {
 
     var window: UIWindow?
     var coordinator: MainCoordinator? // main coordinator init here
     
-    private let keychain = Keychain(service: "com.example.GitHubExplorer")
-
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let ghOauthUrl = URLContexts.first(where: { $0.url.scheme == "ghexplorer" })?.url else { return }
-        GithubAPI().extractAccessCode(from: ghOauthUrl)
+         GithubAPI().extractAndAnnounceAccessCode(from: ghOauthUrl)
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -49,7 +47,7 @@ extension SceneDelegate {
         }
         
         if(hasLoggedInUser) {
-            GithubAPI().getUserFromStoredToken { result in
+            GithubAPI().getUser(accessToken: keychain["accessToken"]!) { result in
                 switch result {
                 case .failure:
                     fatalError("This should never fail")

@@ -8,11 +8,10 @@
 
 import XCTest
 import UIKit
+import KeychainAccess
 @testable import GitHubExplorer
 
 class GithubAPITest: XCTestCase{
-    
-    let endpoint = EndpointMock() // mocked endpoint, not depending on keychain
     
     var jsonUser: [String: Any] = [
         "login" : "alexvidenov",
@@ -38,11 +37,13 @@ class GithubAPITest: XCTestCase{
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testUserEndpointSuccess(){
+    func testUserEndpointSuccessWithToken(){
+        let endpoint = GithubEndpoints.UserEndpoint.GetUser(accessToken: "access")
+        
         let session = NetworkProviderMock(data: jsonData, response: HTTPURLResponse(), error: nil) // mocked response
         
         let network: Network = Network(session: session)
-        let api = GithubAPIMock(network: network) // mocked API without external dependencies
+        let api = GithubAPI(network: network) // mocked API without external dependencies
         
         api.call(endpoint: endpoint) { (result) in
             switch result {
@@ -58,10 +59,12 @@ class GithubAPITest: XCTestCase{
     }
     
     func testUserEndpointFailsWithNetwork(){
+        let endpoint = GithubEndpoints.UserEndpoint.GetUser(accessToken: "accessToken")
+        
         let session = NetworkProviderMock(data: jsonData, response: HTTPURLResponse(), error: Network.NetworkError.noData) // mocked response
         
         let network: Network = Network(session: session)
-        let api = GithubAPIMock(network: network) // mocked API without external dependencies
+        let api = GithubAPI(network: network) // mocked API without external dependencies
         
         api.call(endpoint: endpoint) { (result) in
             switch result {
@@ -75,10 +78,12 @@ class GithubAPITest: XCTestCase{
     }
     
     func testUserFailsWithAuthentication(){
+        let endpoint = GithubEndpoints.UserEndpoint.GetUser(accessToken: "accessToken")
+              
         let session = NetworkProviderMock(data: jsonData, response: HTTPURLResponse(url: URL(string: "https://github.com")!, statusCode: 401, httpVersion: nil, headerFields: nil), error: nil) // mocked response
         
         let network: Network = Network(session: session)
-        let api = GithubAPIMock(network: network) // mocked API without external dependencies
+        let api = GithubAPI(network: network) // mocked API without external dependencies
         
         api.call(endpoint: endpoint) { (result) in
             switch result {
@@ -90,7 +95,9 @@ class GithubAPITest: XCTestCase{
         }
     }
     
-    func testUserFailsWithWrongCredentials(){
+    func testUserGithubError(){
+        let endpoint = GithubEndpoints.UserEndpoint.GetUser(accessToken: "accessToken")
+              
         jsonUser = [
             "userName" : "alexvidenov", // wrong key
             "userMail" : "alexvidenov@sample.com", // wrong key
@@ -109,7 +116,7 @@ class GithubAPITest: XCTestCase{
         let session = NetworkProviderMock(data: jsonData, response: HTTPURLResponse(), error: nil) // mocked response
         
         let network: Network = Network(session: session)
-        let api = GithubAPIMock(network: network) // mocked API without external dependencies
+        let api = GithubAPI(network: network) // mocked API without external dependencies
         
         api.call(endpoint: endpoint) { (result) in
             switch result {
