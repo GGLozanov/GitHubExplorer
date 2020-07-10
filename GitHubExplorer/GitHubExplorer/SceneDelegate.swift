@@ -42,9 +42,9 @@ extension SceneDelegate {
         let userNavigationVC = UINavigationController()
         userNavigationVC.modalPresentationStyle = .fullScreen
         
-        coordinator = MainCoordinator(navigationController: userNavigationVC)
+        self.coordinator = MainCoordinator(navigationController: userNavigationVC)
         
-        guard let _ = coordinator else {
+        guard let coordinator = self.coordinator else {
             fatalError("No coordinator")
         }
         
@@ -54,7 +54,7 @@ extension SceneDelegate {
                 case .failure:
                     fatalError("This should never fail")
                 case .success(let user):
-                    self.coordinator?.navigateToUser(user: user)
+                    coordinator.navigateToUser(user: user)
                 }
             }
         }
