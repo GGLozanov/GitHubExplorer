@@ -19,7 +19,6 @@ class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
     
     private let api = GithubAPI()
     private let notificationCenter = NotificationCenter.default
-    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     @IBAction func login() {
         let urlString = "https://github.com/login/oauth/authorize"

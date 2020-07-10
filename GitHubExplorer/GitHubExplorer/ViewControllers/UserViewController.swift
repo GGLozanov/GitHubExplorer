@@ -11,7 +11,6 @@ import KeychainAccess
 
 class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     private let api: GithubAPI = GithubAPI()
-    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
@@ -47,7 +46,7 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
         
         // FIXME: Invalidate before resetting Issue #5
         
-        guard let accessToken = Keychain(service: "com.example.GitHubExplorer")["accessToken"] else {
+        guard let accessToken = self.keychain["accessToken"] else {
             self.showAlert(fromApiError: GithubAPI.APIError.authentication)
             return
         }
