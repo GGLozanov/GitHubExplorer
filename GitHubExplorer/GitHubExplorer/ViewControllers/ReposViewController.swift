@@ -48,7 +48,7 @@ class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, 
     }
 }
 
-extension ReposViewController: UITableViewDataSource{
+extension ReposViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let repo = repos[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as! RepoCell
@@ -66,12 +66,24 @@ extension ReposViewController: UITableViewDataSource{
 }
 
 
-class RepoCell: UITableViewCell {
+class RepoCell: UITableViewCell, WithOptionalUILabel {
     
     @IBOutlet weak var repoName: UILabel!
+    @IBOutlet weak var repoDescription: UILabel!
+    @IBOutlet weak var repoForks: UILabel!
+    @IBOutlet weak var repoStars: UILabel!
     
     func setRepo(repo: Repository){
         repoName.text = repo.repoName
+        
+        let intRenderPredicate: (Int?) -> Bool = { value in
+            (value ?? -1) > 0 // (potential FIXME: clean this hack solution to nil returning false)
+        }
+        
+        renderOptionalLabelText(label: repoDescription, textValue: repo.repoDescription, prefix: nil)
+        renderOptionalLabelText(label: repoForks, textValue: repo.forks, prefix: "Forks: ", renderPredicate: intRenderPredicate)
+        
+        renderOptionalLabelText(label: repoStars, textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
     }
     
 }
