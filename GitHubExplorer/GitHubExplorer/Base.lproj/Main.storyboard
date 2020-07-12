@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -196,28 +196,68 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="repoCell" id="7df-3n-0AL" customClass="RepoCell" customModule="GitHubExplorer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="52.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="120.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7df-3n-0AL" id="BSJ-3L-26K">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="52.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="120.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="ZUB-6U-4HL">
-                                                    <rect key="frame" x="20" y="11" width="374" height="30.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iu0-MX-ZRo">
+                                                    <rect key="frame" x="20" y="35" width="374" height="30"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="ZUB-6U-4HL">
+                                                            <rect key="frame" x="0.0" y="0.0" width="187" height="30"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="NAP-21-MO3" userLabel="Repo Description">
+                                                            <rect key="frame" x="187" y="0.0" width="187" height="30"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="ZUB-6U-4HL" firstAttribute="width" secondItem="NAP-21-MO3" secondAttribute="width" id="k7F-gH-x1u"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ox-TH-Zf5">
+                                                    <rect key="frame" x="20" y="70" width="374" height="30.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="WH3-KJ-Xr7" userLabel="Repo Forks">
+                                                            <rect key="frame" x="0.0" y="0.0" width="187" height="30.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="310" translatesAutoresizingMaskIntoConstraints="NO" id="3x9-Qt-IlQ">
+                                                            <rect key="frame" x="187" y="0.0" width="187" height="30.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="WH3-KJ-Xr7" firstAttribute="width" secondItem="3x9-Qt-IlQ" secondAttribute="width" id="gzl-f5-Kk6"/>
+                                                    </constraints>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ZUB-6U-4HL" secondAttribute="bottom" id="Ido-ZR-l94"/>
-                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="leading" secondItem="BSJ-3L-26K" secondAttribute="leadingMargin" id="LK0-D4-aHg"/>
-                                                <constraint firstItem="ZUB-6U-4HL" firstAttribute="top" secondItem="BSJ-3L-26K" secondAttribute="topMargin" id="Oi9-j7-Zzs"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="ZUB-6U-4HL" secondAttribute="trailing" id="c92-4U-1ts"/>
+                                                <constraint firstAttribute="bottom" secondItem="6Ox-TH-Zf5" secondAttribute="bottom" constant="20" id="3Sx-8r-hhZ"/>
+                                                <constraint firstItem="Iu0-MX-ZRo" firstAttribute="top" secondItem="BSJ-3L-26K" secondAttribute="top" constant="35" id="FBB-IN-MG5"/>
+                                                <constraint firstItem="Iu0-MX-ZRo" firstAttribute="leading" secondItem="BSJ-3L-26K" secondAttribute="leading" constant="20" id="JcI-Ka-GRj"/>
+                                                <constraint firstAttribute="trailing" secondItem="Iu0-MX-ZRo" secondAttribute="trailing" constant="20" id="hDD-zY-PLt"/>
+                                                <constraint firstAttribute="trailing" secondItem="6Ox-TH-Zf5" secondAttribute="trailing" constant="20" id="hnQ-sT-Rdo"/>
+                                                <constraint firstItem="6Ox-TH-Zf5" firstAttribute="top" secondItem="BSJ-3L-26K" secondAttribute="top" constant="70" id="sGg-ij-oHt"/>
+                                                <constraint firstItem="6Ox-TH-Zf5" firstAttribute="leading" secondItem="BSJ-3L-26K" secondAttribute="leading" constant="20" id="wes-Ri-uL6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="repoDescription" destination="NAP-21-MO3" id="8jA-Z4-flw"/>
+                                            <outlet property="repoForks" destination="WH3-KJ-Xr7" id="Kwk-dv-nXT"/>
                                             <outlet property="repoName" destination="ZUB-6U-4HL" id="ghA-Dx-Jl4"/>
+                                            <outlet property="repoStars" destination="3x9-Qt-IlQ" id="WYN-xT-lik"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
