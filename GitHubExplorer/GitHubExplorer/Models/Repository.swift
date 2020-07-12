@@ -20,6 +20,6 @@ struct Repository: Codable {
     let repoName: String
     let repoDescription: String?
     let commitsURL: String
-    let forks: Int?
-    let stars: Int?
+    let forks: Int // no need for optional because these props equal 0 if untouched
+    let stars: Int
 }
