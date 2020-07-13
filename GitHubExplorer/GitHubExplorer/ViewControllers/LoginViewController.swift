@@ -32,13 +32,17 @@ class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
     
     override func viewDidLoad() {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        UIUtils().roundUpButton(button: loginButton)
+        
         notificationCenter.addObserver(forName: NSNotification.Name.oauthCodeExtracted, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
             guard let code = notification.userInfo?["code"] as? String else {
                 assert(false, "Could not get code from OAuth url")
                 self.showAlert(fromApiError: GithubAPI.APIError.authentication)
+                return
             }
-                        
+            
             self.getUser(withCode: code)
         }
     }

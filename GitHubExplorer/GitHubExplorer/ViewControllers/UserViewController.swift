@@ -40,13 +40,13 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     @IBOutlet var repoCountLabel: UILabel!
     @IBOutlet var emailLabel: UILabel!
     
+    @IBOutlet var reposButton: UIButton!
+    
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator else {
             fatalError("No coordinator")
         }
-        
-        // FIXME: Invalidate before resetting Issue #5
-        
+                
         guard let accessToken = self.keychain["accessToken"] else {
             self.showAlert(fromApiError: GithubAPI.APIError.authentication)
             return
@@ -78,10 +78,14 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.barStyle = UIBarStyle.black
+        navigationController?.navigationBar.tintColor = UIColor.white
         
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.title = user.username
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        uiUtils.roundUpButton(button: reposButton)
         
         self.loadUserProfileImage()
         self.loadUserUI()

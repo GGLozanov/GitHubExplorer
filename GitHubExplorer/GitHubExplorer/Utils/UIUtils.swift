@@ -9,18 +9,23 @@
 import UIKit
 
 class UIUtils {
-    func renderOptionalLabelText<T: CustomStringConvertible>(label: UILabel, textValue: T?, prefix: String?, renderPredicate: (T?) -> Bool = { value in
-          value != nil
-      }) {
-          if renderPredicate(textValue) {
-              guard let textValue = textValue else {
-                  #warning("Predicate doesn't check for nil")
-                  return
-              }
-              
-              label.text = (prefix ?? "") + String(describing: textValue)
-          } else {
-              label.isHidden = true
-          }
-      }
+    public func renderOptionalLabelText<T: CustomStringConvertible>(label: UILabel, textValue: T?, prefix: String?, renderPredicate: (T?) -> Bool = { value in
+        value != nil
+        }) {
+        if renderPredicate(textValue) {
+            guard let textValue = textValue else {
+                #warning("Predicate doesn't check for nil")
+                return
+            }
+            
+            label.text = (prefix ?? "") + String(describing: textValue)
+        } else {
+            label.isHidden = true
+        }
+    }
+    
+    public func roundUpButton(button: UIButton, cornerRadius: CGFloat = 15, borderWidth: CGFloat = 1) {
+        button.layer.cornerRadius = cornerRadius
+        button.layer.borderWidth = borderWidth
+    }
 }
