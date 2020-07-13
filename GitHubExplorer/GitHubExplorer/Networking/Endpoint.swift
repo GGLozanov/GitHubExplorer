@@ -37,7 +37,7 @@ extension Endpoint {
 
             request.url = requestURLComponents.url!;
         case .POST, .DELETE:
-            request.httpBody = dictionaryToJsonString(parameters).data(using: .utf8)
+            request.httpBody = StringUtils().dictionaryToJsonString(parameters).data(using: .utf8)
         }
 
         return request

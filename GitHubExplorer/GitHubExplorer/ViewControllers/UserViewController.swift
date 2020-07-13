@@ -16,6 +16,7 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     weak var coordinator: CoordinatorType?
     
     var user: User
+    let uiUtils: UIUtils = UIUtils()
     
     init?(coder: NSCoder, user: User) {
         self.user = user
@@ -95,21 +96,14 @@ extension UserViewController {
 
 extension UserViewController {
     private func loadUserUI() {
-        func renderOptionalLabelText(label: UILabel, text: String?, prefix: String) {
-            if let text = text {
-                label.text = prefix + text
-            } else {
-                label.isHidden = true
-            }
-        }
         self.followerCountLabel.text = "Follower count: \(user.followerCount)"
         self.followingCountLabel.text = "Following count: \(user.followingCount)"
         
-        renderOptionalLabelText(label: self.nicknameLabel, text: self.user.nickname, prefix: "Username: ")
+        uiUtils.renderOptionalLabelText(label: self.nicknameLabel, textValue: self.user.nickname, prefix: "Username: ")
         
-        renderOptionalLabelText(label: self.descriptionLabel, text: self.user.description, prefix: "Description: ")
+        uiUtils.renderOptionalLabelText(label: self.descriptionLabel, textValue: self.user.description, prefix: "Description: ")
         
-        renderOptionalLabelText(label: self.emailLabel, text: self.user.email, prefix: "Email: ")
+        uiUtils.renderOptionalLabelText(label: self.emailLabel, textValue: self.user.email, prefix: "Email: ")
         
         self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
     }
@@ -128,7 +122,7 @@ extension UserViewController {
     }
 }
 
-extension UserViewController : NetworkErrorAlerting{
+extension UserViewController : NetworkErrorAlerting {
     func showAlert(fromApiError error: GithubAPI.APIError) {
         let alert = error.alert(onAuthenticationError: {
             self.coordinator?.logout()
