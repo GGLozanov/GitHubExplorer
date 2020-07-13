@@ -66,24 +66,29 @@ extension ReposViewController: UITableViewDataSource {
 }
 
 
-class RepoCell: UITableViewCell, WithOptionalUILabel {
+class RepoCell: UITableViewCell {
     
     @IBOutlet weak var repoName: UILabel!
     @IBOutlet weak var repoDescription: UILabel!
     @IBOutlet weak var repoForks: UILabel!
     @IBOutlet weak var repoStars: UILabel!
     
+    let uiUtils: UIUtils = UIUtils()
+    
     func setRepo(repo: Repository){
         repoName.text = repo.repoName
         
         let intRenderPredicate: (Int?) -> Bool = { value in
-            (value ?? -1) > 0 // (potential FIXME: clean this hack solution to nil returning false)
+            guard let value = value, value > 0 else {
+                return false
+            }
+            return true
         }
         
-        renderOptionalLabelText(label: repoDescription, textValue: repo.repoDescription, prefix: nil)
-        renderOptionalLabelText(label: repoForks, textValue: repo.forks, prefix: "Forks: ", renderPredicate: intRenderPredicate)
+        uiUtils.renderOptionalLabelText(label: repoDescription, textValue: repo.repoDescription, prefix: nil)
+        uiUtils.renderOptionalLabelText(label: repoForks, textValue: repo.forks, prefix: "Forks: ", renderPredicate: intRenderPredicate)
         
-        renderOptionalLabelText(label: repoStars, textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
+        uiUtils.renderOptionalLabelText(label: repoStars, textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
     }
     
 }

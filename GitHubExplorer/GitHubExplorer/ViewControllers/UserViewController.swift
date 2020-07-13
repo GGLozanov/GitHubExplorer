@@ -9,13 +9,14 @@
 import UIKit
 import KeychainAccess
 
-class UserViewController: UIViewController, Storyboarded, KeychainOwner, WithOptionalUILabel {
+class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     private let api: GithubAPI = GithubAPI()
     
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
     
     var user: User
+    let uiUtils: UIUtils = UIUtils()
     
     init?(coder: NSCoder, user: User) {
         self.user = user
@@ -98,11 +99,11 @@ extension UserViewController {
         self.followerCountLabel.text = "Follower count: \(user.followerCount)"
         self.followingCountLabel.text = "Following count: \(user.followingCount)"
         
-        renderOptionalLabelText(label: self.nicknameLabel, textValue: self.user.nickname, prefix: "Username: ")
+        uiUtils.renderOptionalLabelText(label: self.nicknameLabel, textValue: self.user.nickname, prefix: "Username: ")
         
-        renderOptionalLabelText(label: self.descriptionLabel, textValue: self.user.description, prefix: "Description: ")
+        uiUtils.renderOptionalLabelText(label: self.descriptionLabel, textValue: self.user.description, prefix: "Description: ")
         
-        renderOptionalLabelText(label: self.emailLabel, textValue: self.user.email, prefix: "Email: ")
+        uiUtils.renderOptionalLabelText(label: self.emailLabel, textValue: self.user.email, prefix: "Email: ")
         
         self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
     }
