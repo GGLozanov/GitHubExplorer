@@ -31,14 +31,13 @@ class LaunchSplashViewController: UIViewController, KeychainOwner {
                 
                 switch result {
                 case .failure:
-                    fatalError("This should never fail")
+                    break
                 case .success(let user):
                     coordinator.navigateToUser(user: user, shouldAnimate: false)
-                    self.present(userNavigationVC, animated: false, completion: nil)
                 }
             }
-        } else {
-            present(userNavigationVC, animated: false, completion: nil)
         }
+        
+        self.present(userNavigationVC, animated: false, completion: nil)
     }
 }
