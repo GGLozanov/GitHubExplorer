@@ -14,7 +14,6 @@ extension UILabel {
         }) {
         if renderPredicate(textValue) {
             guard let textValue = textValue else {
-                #warning("Predicate doesn't check for nil")
                 return
             }
             

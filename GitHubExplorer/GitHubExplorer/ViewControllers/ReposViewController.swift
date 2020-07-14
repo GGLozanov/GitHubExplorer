@@ -12,26 +12,31 @@ import KeychainAccess
 class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, KeychainOwner {
     
     private let api: GithubAPI = GithubAPI()
-    //private let keychain = Keychain(service: "com.example.GitHubExplorer")
     
     @IBOutlet weak var reposTableView: UITableView!
+    
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
+    
+    private let spinner = SpinnerViewController()
     
     var reposURL: URL? = URL(string: "")
     
     private var repos: [Repository] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         reposTableView.delegate = self
         reposTableView.dataSource = self
+        
         navigationItem.title = "Repositories"
         guard let token = self.keychain["accessToken"] else {
             self.showAlert(fromApiError: GithubAPI.APIError.authentication)
             return
         }
+
+        self.createSpinnerView() // create the spinner before executing the api call
         
         let endpoint = GithubEndpoints.UserEndpoint.ListUserRepos(accessToken: token, url: reposURL!)
         api.call(endpoint: endpoint) { [weak self] (result) in
@@ -39,9 +44,8 @@ class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, 
             switch (result){
             case .success(let repos):
                 self.repos = repos
-                print(repos.filter({ $0.stars > 0 || $0.forks > 0 }))
+                self.detachSpinnerFromParent() // detach when data is received
                 self.reposTableView.reloadData() // necessary because the task is async and initially, the table view is empty
-                print(repos.count)
             case .failure(let error):
                 self.present(error.alert(), animated: true, completion: nil)
             }
@@ -66,14 +70,13 @@ extension ReposViewController: UITableViewDataSource {
     }
 }
 
-
 class RepoCell: UITableViewCell {
     
     @IBOutlet weak var repoName: UILabel!
     @IBOutlet weak var repoDescription: UILabel!
     @IBOutlet weak var repoForks: UILabel!
     @IBOutlet weak var repoStars: UILabel!
-        
+    
     func setRepo(repo: Repository){
         repoName.text = repo.repoName
         
@@ -90,6 +93,41 @@ class RepoCell: UITableViewCell {
         repoStars.renderOptionalLabelText(textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
     }
     
+}
+
+extension ReposViewController{
+    private class SpinnerViewController: UIViewController {
+        var spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+
+        override func loadView() {
+            view = UIView()
+            view.backgroundColor = UIColor(white: 0, alpha: 0.7)
+
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            spinner.startAnimating()
+            view.addSubview(spinner)
+
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
+    }
+}
+
+extension ReposViewController{
+    func createSpinnerView() {
+        // adding the spinner view controller
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
+    }
+    
+    func detachSpinnerFromParent(){
+        // removing the spinner from the superView
+        spinner.willMove(toParent: nil)
+        spinner.view.removeFromSuperview()
+        spinner.removeFromParent()
+    }
 }
 
 extension ReposViewController: NetworkErrorAlerting {
