@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,21 +16,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Welcome to GitHub Explorer" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-id-jeU">
-                                <rect key="frame" x="20" y="172" width="236" height="130"/>
+                                <rect key="frame" x="16" y="183" width="382" height="87"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="36"/>
                                 <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your one-stop shop for all your Git tracking needs." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2t-TO-MpC">
-                                <rect key="frame" x="20" y="327" width="353" height="72"/>
+                                <rect key="frame" x="16" y="295" width="343" height="72"/>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="32"/>
                                 <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bsb-Kr-hXX">
-                                <rect key="frame" x="20" y="470" width="187" height="42"/>
+                                <rect key="frame" x="16" y="439" width="191" height="42"/>
                                 <color key="backgroundColor" red="1" green="0.62352941176470589" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -44,21 +44,23 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686274509803" green="0.086274509803921567" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="K2t-TO-MpC" secondAttribute="trailing" constant="41" id="HlL-uC-AFi"/>
+                            <constraint firstItem="Yox-id-jeU" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.5" priority="749" id="2zz-gP-WkE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Bsb-Kr-hXX" secondAttribute="bottom" constant="16" id="8s9-qc-iDy"/>
+                            <constraint firstItem="Yox-id-jeU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-16" id="Gq9-8g-w8g"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="K2t-TO-MpC" secondAttribute="trailing" constant="16" id="HlL-uC-AFi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bsb-Kr-hXX" secondAttribute="trailing" constant="207" id="JRO-70-hCB"/>
-                            <constraint firstItem="K2t-TO-MpC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Med-bc-o9g"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Bsb-Kr-hXX" secondAttribute="bottom" constant="350" id="QBd-rv-ZOv"/>
-                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Sym-gv-kvi"/>
-                            <constraint firstItem="Yox-id-jeU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Wqg-mc-yFe"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Yox-id-jeU" secondAttribute="trailing" constant="158" id="fgy-TK-rzk"/>
-                            <constraint firstItem="Yox-id-jeU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="128" id="mDq-3e-YPu"/>
-                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="top" secondItem="K2t-TO-MpC" secondAttribute="bottom" constant="71" id="s2Y-mn-NIo"/>
+                            <constraint firstItem="K2t-TO-MpC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Med-bc-o9g"/>
+                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Sym-gv-kvi"/>
+                            <constraint firstItem="Yox-id-jeU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Wqg-mc-yFe"/>
+                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="top" secondItem="K2t-TO-MpC" secondAttribute="bottom" priority="748" constant="72" id="r5o-UX-uEp"/>
+                            <constraint firstItem="Bsb-Kr-hXX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="K2t-TO-MpC" secondAttribute="bottom" constant="8" id="s2Y-mn-NIo"/>
                             <constraint firstItem="K2t-TO-MpC" firstAttribute="top" secondItem="Yox-id-jeU" secondAttribute="bottom" constant="25" id="wPv-FC-xMH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="Bsb-Kr-hXX" id="rK7-1q-hXh"/>
+                        <outlet property="welcomeLabel" destination="Yox-id-jeU" id="ffg-qq-IZM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

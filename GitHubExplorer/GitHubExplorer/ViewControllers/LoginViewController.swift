@@ -12,6 +12,7 @@ import KeychainAccess
 
 class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var welcomeLabel: UILabel!
     
     typealias CoordinatorType = MainCoordinator
     weak var coordinator: CoordinatorType?
@@ -32,8 +33,8 @@ class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
     
     override func viewDidLoad() {
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        UIUtils().roundUpButton(button: loginButton)
+
+        setupUI()
         
         notificationCenter.addObserver(forName: NSNotification.Name.oauthCodeExtracted, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
@@ -49,6 +50,10 @@ class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
 }
 
 extension LoginViewController {
+    private func setupUI() {
+        UIUtils().roundUpButton(button: loginButton)
+        welcomeLabel.text = "Welcome to\nGitHub\nExplorer"
+    }
     private func getUser(withCode code: String) {
         api.call(endpoint: GithubEndpoints.AccessTokenEndpoint.GetToken(code: code)) { [weak self] (result) in
             guard let self = self else { return }
