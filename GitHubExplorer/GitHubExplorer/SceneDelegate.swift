@@ -30,33 +30,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, KeychainOwner {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
-        
-        setupUI(hasLoggedInUser: keychain["accessToken"] != nil)
-    }
-}
-
-extension SceneDelegate {
-    private func setupUI(hasLoggedInUser: Bool) {
-        let userNavigationVC = UINavigationController()
-        userNavigationVC.modalPresentationStyle = .fullScreen
-        
-        self.coordinator = MainCoordinator(navigationController: userNavigationVC)
-        
-        guard let coordinator = self.coordinator else {
-            fatalError("No coordinator")
-        }
-        
-        if(hasLoggedInUser) {
-            GithubAPI().getUser(accessToken: keychain["accessToken"]!) { result in
-                switch result {
-                case .failure:
-                    fatalError("This should never fail")
-                case .success(let user):
-                    coordinator.navigateToUser(user: user)
-                }
-            }
-        }
-                
-        window?.rootViewController = userNavigationVC
     }
 }

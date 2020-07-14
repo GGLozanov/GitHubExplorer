@@ -27,7 +27,7 @@ class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, 
         
         reposTableView.delegate = self
         reposTableView.dataSource = self
-        
+        navigationItem.title = "Repositories"
         guard let token = self.keychain["accessToken"] else {
             self.showAlert(fromApiError: GithubAPI.APIError.authentication)
             return
@@ -39,6 +39,7 @@ class ReposViewController: UIViewController, UITableViewDelegate, Storyboarded, 
             switch (result){
             case .success(let repos):
                 self.repos = repos
+                print(repos.filter({ $0.stars > 0 || $0.forks > 0 }))
                 self.reposTableView.reloadData() // necessary because the task is async and initially, the table view is empty
                 print(repos.count)
             case .failure(let error):

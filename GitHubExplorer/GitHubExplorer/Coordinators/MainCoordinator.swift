@@ -15,6 +15,8 @@ class MainCoordinator: Coordinator {
     
     init(navigationController: UINavigationController = UINavigationController()) {
         self.navigationController = navigationController
+        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController.navigationBar.titleTextAttributes = textAttributes
         
         if navigationController.viewControllers.count == 0 {
             let vc = LoginViewController.instantiate()

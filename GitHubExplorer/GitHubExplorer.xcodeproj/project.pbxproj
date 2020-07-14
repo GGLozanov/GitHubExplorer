@@ -21,6 +21,7 @@
 		B15BCDC324AF4ED600D78E13 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDC224AF4ED600D78E13 /* LoginViewController.swift */; };
 		B15BCDD824B32BFA00D78E13 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B15BCDD724B32BFA00D78E13 /* KeychainAccess */; };
 		B15BCDDA24B32DBF00D78E13 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BCDD924B32DBF00D78E13 /* UserViewController.swift */; };
+		B1D7394324BDAF17002EA21C /* LaunchSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7394224BDAF17002EA21C /* LaunchSplashViewController.swift */; };
 		B1E71E8124B47C3E000BF677 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E71E8024B47C3E000BF677 /* Endpoint.swift */; };
 		B407B60B24ACE1500098CEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B60A24ACE1500098CEFA /* AppDelegate.swift */; };
 		B407B60D24ACE1500098CEFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407B60C24ACE1500098CEFA /* SceneDelegate.swift */; };
@@ -61,6 +62,7 @@
 		B15BCDBC24AF4C1B00D78E13 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		B15BCDC224AF4ED600D78E13 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B15BCDD924B32DBF00D78E13 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		B1D7394224BDAF17002EA21C /* LaunchSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchSplashViewController.swift; sourceTree = "<group>"; };
 		B1E71E8024B47C3E000BF677 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		B407B60724ACE1500098CEFA /* GitHubExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B407B60A24ACE1500098CEFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				B15BCDD924B32DBF00D78E13 /* UserViewController.swift */,
 				AB70311124B5C150003349E4 /* ReposViewController.swift */,
 				AB70311924B61A99003349E4 /* AlertProtocol.swift */,
+				B1D7394224BDAF17002EA21C /* LaunchSplashViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				B407B63024B0B8940098CEFA /* StringUtils.swift in Sources */,
 				B407B63C24B356080098CEFA /* Coordinator.swift in Sources */,
 				B14AA74C24AF2837004B334A /* URLSession+NetworkProvider.swift in Sources */,
+				B1D7394324BDAF17002EA21C /* LaunchSplashViewController.swift in Sources */,
 				B447B9CC24BC40340070A00D /* UIUtils.swift in Sources */,
 				AB70311024B5BD3C003349E4 /* Repository.swift in Sources */,
 				B15BCDBD24AF4C1B00D78E13 /* APIError.swift in Sources */,

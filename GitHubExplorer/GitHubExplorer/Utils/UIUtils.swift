@@ -19,6 +19,7 @@ class UIUtils {
             }
             
             label.text = (prefix ?? "") + String(describing: textValue)
+            label.isHidden = false
         } else {
             label.isHidden = true
         }
