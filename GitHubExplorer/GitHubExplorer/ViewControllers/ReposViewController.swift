@@ -73,9 +73,7 @@ class RepoCell: UITableViewCell {
     @IBOutlet weak var repoDescription: UILabel!
     @IBOutlet weak var repoForks: UILabel!
     @IBOutlet weak var repoStars: UILabel!
-    
-    let uiUtils: UIUtils = UIUtils()
-    
+        
     func setRepo(repo: Repository){
         repoName.text = repo.repoName
         
@@ -86,10 +84,10 @@ class RepoCell: UITableViewCell {
             return true
         }
         
-        uiUtils.renderOptionalLabelText(label: repoDescription, textValue: repo.repoDescription, prefix: nil)
-        uiUtils.renderOptionalLabelText(label: repoForks, textValue: repo.forks, prefix: "Forks: ", renderPredicate: intRenderPredicate)
+        repoDescription.renderOptionalLabelText(textValue: repo.repoDescription, prefix: nil)
+        repoForks.renderOptionalLabelText(textValue: repo.forks, prefix: "Forks: ", renderPredicate: intRenderPredicate)
         
-        uiUtils.renderOptionalLabelText(label: repoStars, textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
+        repoStars.renderOptionalLabelText(textValue: repo.stars, prefix: "Stars: ", renderPredicate: intRenderPredicate)
     }
     
 }

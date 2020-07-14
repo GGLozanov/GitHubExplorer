@@ -16,7 +16,6 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
     weak var coordinator: CoordinatorType?
     
     var user: User
-    let uiUtils: UIUtils = UIUtils()
     
     init?(coder: NSCoder, user: User) {
         self.user = user
@@ -85,7 +84,7 @@ class UserViewController: UIViewController, Storyboarded, KeychainOwner {
         navigationItem.title = user.username
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        uiUtils.roundUpButton(button: reposButton)
+        reposButton.roundUpButton()
         
         self.loadUserProfileImage()
         self.loadUserUI()
@@ -103,11 +102,11 @@ extension UserViewController {
         self.followerCountLabel.text = "Follower count: \(user.followerCount)"
         self.followingCountLabel.text = "Following count: \(user.followingCount)"
         
-        uiUtils.renderOptionalLabelText(label: self.nicknameLabel, textValue: self.user.nickname, prefix: "Username: ")
+        nicknameLabel.renderOptionalLabelText(textValue: self.user.nickname, prefix: "Username: ")
         
-        uiUtils.renderOptionalLabelText(label: self.descriptionLabel, textValue: self.user.description, prefix: "Description: ")
+        descriptionLabel.renderOptionalLabelText(textValue: self.user.description, prefix: "Description: ")
         
-        uiUtils.renderOptionalLabelText(label: self.emailLabel, textValue: self.user.email, prefix: "Email: ")
+        emailLabel.renderOptionalLabelText(textValue: self.user.email, prefix: "Email: ")
         
         self.repoCountLabel.text = "Public repo count: \(user.publicRepoCount)"
     }

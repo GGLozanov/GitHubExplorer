@@ -8,8 +8,8 @@
 
 import UIKit
 
-class UIUtils {
-    public func renderOptionalLabelText<T: CustomStringConvertible>(label: UILabel, textValue: T?, prefix: String?, renderPredicate: (T?) -> Bool = { value in
+extension UILabel {
+    public func renderOptionalLabelText<T: CustomStringConvertible>(textValue: T?, prefix: String?, renderPredicate: (T?) -> Bool = { value in
         value != nil
         }) {
         if renderPredicate(textValue) {
@@ -18,15 +18,17 @@ class UIUtils {
                 return
             }
             
-            label.text = (prefix ?? "") + String(describing: textValue)
-            label.isHidden = false
+            self.text = (prefix ?? "") + String(describing: textValue)
+            self.isHidden = false
         } else {
-            label.isHidden = true
+            self.isHidden = true
         }
     }
-    
-    public func roundUpButton(button: UIButton, cornerRadius: CGFloat = 15, borderWidth: CGFloat = 1) {
-        button.layer.cornerRadius = cornerRadius
-        button.layer.borderWidth = borderWidth
+}
+
+extension UIButton {
+    public func roundUpButton(cornerRadius: CGFloat = 15, borderWidth: CGFloat = 1) {
+        self.layer.cornerRadius = cornerRadius
+        self.layer.borderWidth = borderWidth
     }
 }

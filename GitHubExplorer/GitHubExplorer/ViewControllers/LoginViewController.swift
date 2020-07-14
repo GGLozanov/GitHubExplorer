@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, Storyboarded, KeychainOwner {
 
 extension LoginViewController {
     private func setupUI() {
-        UIUtils().roundUpButton(button: loginButton)
+        loginButton.roundUpButton()
     }
     private func getUser(withCode code: String) {
         api.call(endpoint: GithubEndpoints.AccessTokenEndpoint.GetToken(code: code)) { [weak self] (result) in
